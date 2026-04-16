@@ -458,12 +458,12 @@ body.viewer-mode .viewer-banner{display:flex!important;}
     <table class="al-table">
       <thead><tr>
         <th style="width:32px">#</th>
-        <th class="al-sort-th" onclick="alSort('prio')">Prio <span id="as-prio">&#x21D5;</span></th>
-        <th class="al-sort-th" onclick="alSort('cat')">Categorie <span id="as-cat">&#x21D5;</span></th>
-        <th class="al-sort-th" onclick="alSort('wat')">Actie <span id="as-wat">&#x21D5;</span></th>
+        <th class="al-sort-th" onclick="alSort('prio')">Prio <span id="as-prio">↕</span></th>
+        <th class="al-sort-th" onclick="alSort('cat')">Categorie <span id="as-cat">↕</span></th>
+        <th class="al-sort-th" onclick="alSort('wat')">Actie <span id="as-wat">↕</span></th>
         <th>Wie</th>
-        <th class="al-sort-th" onclick="alSort('date')">Deadline <span id="as-date">&#x21D5;</span></th>
-        <th class="al-sort-th" onclick="alSort('days')" style="text-align:center">Dagen over <span id="as-days">&#x21D5;</span></th>
+        <th class="al-sort-th" onclick="alSort('date')">Deadline <span id="as-date">↕</span></th>
+        <th class="al-sort-th" onclick="alSort('days')" style="text-align:center">Dagen over <span id="as-days">↕</span></th>
         <th style="text-align:center;width:80px">Afgerond</th>
       </tr></thead>
       <tbody id="al-tbody"></tbody>
@@ -750,7 +750,7 @@ function renderActionList(){
   });
   ['prio','cat','wat','date','days'].forEach(k=>{
     const el=document.getElementById('as-'+k);
-    if(el)el.textContent=alSortKey===k?(alSortDir===1?'&#x2191;':'&#x2193;'):'&#x21D5;';
+    if(el)el.textContent=alSortKey===k?(alSortDir===1?'↑':'↓'):'↕';
   });
   const all=getAllActions();
   const badge=document.getElementById('action-count-badge');
