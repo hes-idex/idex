@@ -6,7 +6,7 @@
 <title>IDEX - HES International</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root {
+:root, [data-theme="dark"] {
   --bg:#1a2e45; --surface:#213549; --surface2:#284058; --surface3:#2f4d6a;
   --border:rgba(255,255,255,.09); --border2:rgba(255,255,255,.16);
   --text:#eef2f7; --muted:#5b7a99; --muted2:#90adc4;
@@ -18,6 +18,34 @@
   --blue:#3498db;   --blue-bg:rgba(52,152,219,.14);
   --safety:#2ecc71; --quality:#3498db; --delivery:#f5c542; --cost:#e8401c;
 }
+[data-theme="light"] {
+  --bg:#f0f3f7; --surface:#ffffff; --surface2:#e8edf3; --surface3:#d8e0ea;
+  --border:rgba(0,0,0,.08); --border2:rgba(0,0,0,.14);
+  --text:#1a2e45; --muted:#7a90a8; --muted2:#5a7a99;
+  --hes:#e8401c; --hes-dark:#bf3316;
+  --green:#1a9e50;  --green-bg:rgba(26,158,80,.12);
+  --yellow:#c49a00; --yellow-bg:rgba(196,154,0,.12);
+  --orange:#c45e00; --orange-bg:rgba(196,94,0,.12);
+  --red:#c0392b;    --red-bg:rgba(192,57,43,.12);
+  --blue:#1a6fba;   --blue-bg:rgba(26,111,186,.12);
+  --safety:#1a9e50; --quality:#1a6fba; --delivery:#c49a00; --cost:#e8401c;
+}
+/* Light theme extras */
+[data-theme="light"] .card { box-shadow:0 2px 8px rgba(0,0,0,.06); }
+[data-theme="light"] .card-header { background:#f8fafc; }
+[data-theme="light"] .page-tabs { box-shadow:0 1px 4px rgba(0,0,0,.06); }
+[data-theme="light"] .date-nav { box-shadow:0 1px 4px rgba(0,0,0,.06); }
+[data-theme="light"] .do-section { box-shadow:0 1px 4px rgba(0,0,0,.04); }
+[data-theme="light"] .al-table tbody tr { background:#fff; }
+[data-theme="light"] .al-table tbody tr:hover td { background:#f5f8fc; }
+[data-theme="light"] .cc.green  { background:rgba(26,158,80,.15);color:#1a7a3a;border-color:rgba(26,158,80,.35); }
+[data-theme="light"] .cc.yellow { background:rgba(196,154,0,.15);color:#8a6e00;border-color:rgba(196,154,0,.35); }
+[data-theme="light"] .cc.orange { background:rgba(196,94,0,.15); color:#9a4e00;border-color:rgba(196,94,0,.35); }
+[data-theme="light"] .cc.red    { background:rgba(192,57,43,.15);color:#922b21;border-color:rgba(192,57,43,.35); }
+[data-theme="light"] .cc.blue   { background:rgba(26,111,186,.15);color:#1a5a9a;border-color:rgba(26,111,186,.35); }
+[data-theme="light"] input[type=date]::-webkit-calendar-picker-indicator { filter:invert(0) !important; }
+[data-theme="light"] .modal { box-shadow:0 8px 32px rgba(0,0,0,.15); }
+[data-theme="light"] .overlay { background:rgba(26,46,69,.65); }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg);color:var(--text);font-family:"DM Sans",sans-serif;min-height:100vh;}
 .topbar{height:5px;background:linear-gradient(90deg,#e8401c,#ff6535);}
@@ -47,6 +75,8 @@ body{background:var(--bg);color:var(--text);font-family:"DM Sans",sans-serif;min
 .btn-edit{background:var(--surface2);color:var(--text);border:1px solid var(--border2);}
 .btn-edit:hover{background:var(--surface3);}
 .btn-pdf{background:rgba(231,76,60,.15);color:#e74c3c;border:1px solid rgba(231,76,60,.35);}
+.btn-theme{background:var(--surface2);color:var(--muted2);border:1px solid var(--border2);padding:7px 10px;}
+.btn-theme:hover{background:var(--surface3);color:var(--text);}
 .btn-pdf:hover{background:rgba(231,76,60,.25);}
 .btn-save{background:var(--hes);color:#fff;}
 .btn-save:hover{background:var(--hes-dark);}
@@ -358,6 +388,95 @@ body.viewer-mode .viewer-banner{display:flex!important;}
 
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(14px);background:var(--hes);color:#fff;padding:9px 18px;border-radius:9px;font-size:13px;font-weight:500;opacity:0;transition:all .3s;pointer-events:none;z-index:999;white-space:nowrap;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+/* ── PLANNING ── */
+#page-planning{display:none;}
+#page-planning.visible{display:block;}
+.page-tab.active.tab-planning{color:#9b59b6;}
+.pl-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.pl-title{font-family:"Syne",sans-serif;font-weight:800;font-size:18px;}
+.pl-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.pl-view-btn{padding:5px 12px;border-radius:7px;border:1px solid var(--border2);background:var(--surface2);color:var(--muted2);font-size:11px;font-weight:600;cursor:pointer;font-family:"DM Sans",sans-serif;transition:all .15s;}
+.pl-view-btn:hover{background:var(--surface3);color:var(--text);}
+.pl-view-btn.active{background:rgba(155,89,182,.2);color:#9b59b6;border-color:rgba(155,89,182,.4);}
+.pl-shift-tabs{display:flex;gap:4px;}
+.pl-shift-tab{padding:5px 14px;border-radius:7px;border:1px solid var(--border2);background:var(--surface2);color:var(--muted2);font-size:12px;font-weight:600;cursor:pointer;font-family:"DM Sans",sans-serif;transition:all .15s;}
+.pl-shift-tab.active-A{background:rgba(52,152,219,.2);color:#3498db;border-color:rgba(52,152,219,.4);}
+.pl-shift-tab.active-B{background:rgba(245,197,66,.2);color:#f5c542;border-color:rgba(245,197,66,.4);}
+.pl-shift-tab.active-C{background:rgba(46,204,113,.2);color:#2ecc71;border-color:rgba(46,204,113,.4);}
+
+/* WEEK NAVIGATOR */
+.pl-week-nav{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:7px 12px;margin-bottom:14px;}
+.pl-week-label{font-family:"Syne",sans-serif;font-weight:700;font-size:14px;flex:1;text-align:center;min-width:200px;}
+
+/* GANTT / WEEK VIEW */
+.pl-week-grid{background:var(--surface);border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:14px;}
+.pl-week-head{display:grid;grid-template-columns:180px repeat(7,1fr);background:var(--surface2);border-bottom:1px solid var(--border);}
+.pl-week-head-cell{padding:8px 6px;text-align:center;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted2);border-right:1px solid var(--border);}
+.pl-week-head-cell:last-child{border-right:none;}
+.pl-week-head-cell.today{color:var(--hes);background:rgba(232,64,28,.08);}
+.pl-resource-label{padding:10px 12px;font-size:12px;font-weight:600;color:var(--text);border-right:1px solid var(--border);display:flex;align-items:center;gap:7px;background:var(--surface);}
+.pl-resource-label svg{width:16px;height:16px;flex-shrink:0;color:var(--muted2);}
+.pl-week-row{display:grid;grid-template-columns:180px repeat(7,1fr);border-bottom:1px solid var(--border);}
+.pl-week-row:last-child{border-bottom:none;}
+.pl-week-cell{border-right:1px solid var(--border);min-height:48px;padding:3px;position:relative;}
+.pl-week-cell:last-child{border-right:none;}
+.pl-week-cell.today-col{background:rgba(232,64,28,.04);}
+.pl-bar{border-radius:5px;padding:3px 7px;font-size:10px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;transition:opacity .15s;margin-bottom:2px;}
+.pl-bar:hover{opacity:.8;}
+.pl-bar.shift-A{background:rgba(52,152,219,.25);color:#3498db;border:1px solid rgba(52,152,219,.4);}
+.pl-bar.shift-B{background:rgba(245,197,66,.25);color:#c49a00;border:1px solid rgba(245,197,66,.4);}
+.pl-bar.shift-C{background:rgba(46,204,113,.25);color:#1a9e50;border:1px solid rgba(46,204,113,.4);}
+.pl-bar.status-done{opacity:.5;text-decoration:line-through;}
+.pl-bar.status-progress{border-style:dashed;}
+
+/* HOUR VIEW */
+.pl-hour-grid{background:var(--surface);border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:14px;}
+.pl-hour-head{display:grid;grid-template-columns:120px repeat(24,1fr);background:var(--surface2);border-bottom:2px solid var(--border);}
+.pl-hour-head-cell{padding:5px 2px;text-align:center;font-size:9px;font-weight:600;color:var(--muted2);border-right:1px solid var(--border);}
+.pl-hour-head-cell.shift-a-bg{background:rgba(52,152,219,.08);}
+.pl-hour-head-cell.shift-b-bg{background:rgba(245,197,66,.08);}
+.pl-hour-head-cell.shift-c-bg{background:rgba(46,204,113,.08);}
+.pl-hour-head-cell.shift-sep{border-right:2px solid var(--border2);}
+.pl-hour-row{display:grid;grid-template-columns:120px repeat(24,1fr);border-bottom:1px solid var(--border);}
+.pl-hour-row:last-child{border-bottom:none;}
+.pl-hour-label{padding:8px 10px;font-size:11px;font-weight:600;color:var(--text);border-right:1px solid var(--border);display:flex;align-items:center;gap:6px;}
+.pl-hour-cell{border-right:1px solid var(--border);min-height:40px;position:relative;}
+.pl-hour-cell.shift-a-bg{background:rgba(52,152,219,.04);}
+.pl-hour-cell.shift-b-bg{background:rgba(245,197,66,.04);}
+.pl-hour-cell.shift-c-bg{background:rgba(46,204,113,.04);}
+.pl-hour-cell.now-line::after{content:'';position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--hes);opacity:.7;}
+
+/* TASK CARDS */
+.pl-tasks{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.pl-task-card{background:var(--surface);border-radius:10px;border:1px solid var(--border);padding:12px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .15s;}
+.pl-task-card:hover{background:var(--surface2);}
+.pl-task-card .ship-icon{font-size:20px;width:32px;text-align:center;flex-shrink:0;}
+.pl-task-info{flex:1;}
+.pl-task-name{font-weight:600;font-size:13px;}
+.pl-task-meta{font-size:11px;color:var(--muted2);margin-top:2px;display:flex;gap:10px;flex-wrap:wrap;}
+.pl-task-badges{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
+.pl-badge{display:inline-block;padding:2px 8px;border-radius:5px;font-size:10px;font-weight:700;}
+.pl-badge.shift-A{background:rgba(52,152,219,.15);color:#3498db;}
+.pl-badge.shift-B{background:rgba(245,197,66,.15);color:#c49a00;}
+.pl-badge.shift-C{background:rgba(46,204,113,.15);color:#1a9e50;}
+.pl-badge.product{background:var(--surface2);color:var(--muted2);}
+.pl-badge.status-plan{background:rgba(155,89,182,.15);color:#9b59b6;}
+.pl-badge.status-bezig{background:rgba(245,197,66,.15);color:#c49a00;}
+.pl-badge.status-klaar{background:rgba(26,158,80,.15);color:#1a9e50;}
+.pl-badge.status-wacht{background:rgba(231,76,60,.15);color:#e74c3c;}
+.pl-progress-bar{height:4px;background:var(--surface2);border-radius:2px;width:80px;overflow:hidden;}
+.pl-progress-fill{height:4px;border-radius:2px;background:var(--green);transition:width .3s;}
+
+/* ADD TASK MODAL */
+.pl-add-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;border:1px dashed var(--border2);background:transparent;color:var(--muted2);font-size:13px;font-family:"DM Sans",sans-serif;cursor:pointer;transition:all .15s;width:100%;justify-content:center;}
+.pl-add-btn:hover{background:var(--surface2);color:var(--text);border-color:rgba(155,89,182,.4);}
+.pl-type-btn{padding:6px 12px;border-radius:7px;border:1px solid var(--border2);background:var(--surface2);color:var(--muted2);font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;font-family:"DM Sans",sans-serif;}
+.pl-type-btn:hover{background:var(--surface3);color:var(--text);}
+.pl-type-btn.active{background:rgba(155,89,182,.2);color:#9b59b6;border-color:rgba(155,89,182,.4);}
+
+/* TMS notice */
+.pl-tms-notice{background:rgba(155,89,182,.08);border:1px solid rgba(155,89,182,.2);border-radius:8px;padding:8px 14px;font-size:11px;color:#9b59b6;display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+
 @media(max-width:860px){
   .grid{grid-template-columns:1fr;}
   .form-2{grid-template-columns:1fr;}
@@ -397,6 +516,10 @@ body.viewer-mode .viewer-banner{display:flex!important;}
     </div>
     <div style="width:1px;height:28px;background:var(--border2);"></div>
     <div class="badge" id="week-badge">Week —</div>
+    <button class="btn btn-theme" id="theme-toggle-btn" onclick="toggleTheme()" title="Wissel thema">
+      <svg id="theme-icon-moon" viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>
+      <svg id="theme-icon-sun" viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;display:none;"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 0 0 0-1.41l-1.06-1.06zm1.06-12.37l-1.06 1.06a.996.996 0 0 0 0 1.41c.39.39 1.03.39 1.41 0l1.06-1.06a.996.996 0 0 0 0-1.41.996.996 0 0 0-1.41 0zM7.05 18.36l-1.06 1.06a.996.996 0 0 0 0 1.41c.39.39 1.03.39 1.41 0l1.06-1.06a.996.996 0 0 0 0-1.41.996.996 0 0 0-1.41 0z"/></svg>
+    </button>
     <button class="btn btn-pdf" onclick="exportPDF()" title="Exporteer SQDC naar PDF"><svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zm-2 8H7v-1.5h4V17zm2-3H7v-1.5h6V14zm0-3H7v-1.5h6V11z"/></svg> PDF</button>
     <button class="btn btn-edit" onclick="openModal()">&#x270F;&#xFE0F; Voeg dag in</button>
   </div>
@@ -416,6 +539,10 @@ body.viewer-mode .viewer-banner{display:flex!important;}
   <button class="page-tab tab-dagorder" id="tab-dagorder" onclick="switchPage('dagorder')">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM8 16h8v1.5H8zm0-3h8v1.5H8zm0-3h5v1.5H8z"/></svg>
     Dagorder
+  </button>
+  <button class="page-tab tab-planning" id="tab-planning" onclick="switchPage('planning')">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/></svg>
+    Planning
   </button>
 </div>
 
@@ -478,9 +605,9 @@ body.viewer-mode .viewer-banner{display:flex!important;}
       <div class="do-title">&#x1F4CB; Dagorder</div>
       <div class="do-meta">
         <span style="font-size:12px;color:var(--muted2);">Dienst:</span>
-        <button class="do-shift-btn active" id="ds-A" onclick="setShift('A')">A (06-14)</button>
-        <button class="do-shift-btn" id="ds-B" onclick="setShift('B')">B (14-22)</button>
-        <button class="do-shift-btn" id="ds-C" onclick="setShift('C')">C (22-06)</button>
+        <button class="do-shift-btn active" id="ds-A" onclick="setShift('A')">A (07-15)</button>
+        <button class="do-shift-btn" id="ds-B" onclick="setShift('B')">B (15-23)</button>
+        <button class="do-shift-btn" id="ds-C" onclick="setShift('C')">C (23-07)</button>
         <span style="font-size:12px;color:var(--muted2);">Naam:</span>
         <input class="do-author-input" id="do-author" placeholder="Jouw naam..." oninput="saveDOAuthor(this.value)">
       </div>
@@ -500,6 +627,131 @@ body.viewer-mode .viewer-banner{display:flex!important;}
     </div>
   </div>
   <div class="do-sections" id="do-sections"></div>
+</div>
+
+
+<!-- PLANNING PAGE -->
+<div id="page-planning">
+  <div class="pl-header">
+    <div>
+      <div class="pl-title">&#x1F6A2; Planning</div>
+    </div>
+    <div class="pl-controls">
+      <div class="pl-shift-tabs">
+        <button class="pl-shift-tab active-A" id="pl-sh-A" onclick="plSetShift('A')">Dienst A 07-15</button>
+        <button class="pl-shift-tab" id="pl-sh-B" onclick="plSetShift('B')">Dienst B 15-23</button>
+        <button class="pl-shift-tab" id="pl-sh-C" onclick="plSetShift('C')">Dienst C 23-07</button>
+        <button class="pl-shift-tab" id="pl-sh-all" onclick="plSetShift('all')" style="background:rgba(155,89,182,.15);color:#9b59b6;border-color:rgba(155,89,182,.3);">Alle diensten</button>
+      </div>
+      <div style="width:1px;height:20px;background:var(--border2);"></div>
+      <button class="pl-view-btn active" id="pl-view-week" onclick="plSetView('week')">Week</button>
+      <button class="pl-view-btn" id="pl-view-hour" onclick="plSetView('hour')">Dag / Uur</button>
+      <button class="pl-view-btn" id="pl-view-list" onclick="plSetView('list')">Lijst</button>
+    </div>
+  </div>
+
+  <!-- TMS notice -->
+  <div class="pl-tms-notice">
+    <svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;flex-shrink:0;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+    <span><strong>TMS koppeling beschikbaar</strong> — Planning kan automatisch worden ingeladen vanuit Excel/SharePoint. Vraag IT om koppeling in te stellen.</span>
+  </div>
+
+  <!-- WEEK NAV -->
+  <div class="pl-week-nav">
+    <button class="nav-btn" onclick="plShiftWeek(-1)">&#9664;</button>
+    <div id="pl-week-label" class="pl-week-label">—</div>
+    <button class="nav-btn" onclick="plGoToday()">Vandaag</button>
+    <button class="nav-btn" onclick="plShiftWeek(1)">&#9654;</button>
+    <div style="margin-left:auto;">
+      <button class="btn btn-pdf" onclick="plAddTask()" style="background:rgba(155,89,182,.15);color:#9b59b6;border-color:rgba(155,89,182,.3);">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        Taak toevoegen
+      </button>
+    </div>
+  </div>
+
+  <!-- WEEK VIEW -->
+  <div id="pl-week-view">
+    <div class="pl-week-grid" id="pl-week-grid"></div>
+  </div>
+
+  <!-- HOUR VIEW -->
+  <div id="pl-hour-view" style="display:none;">
+    <div class="pl-hour-grid" id="pl-hour-grid"></div>
+  </div>
+
+  <!-- LIST VIEW -->
+  <div id="pl-list-view" style="display:none;">
+    <div class="pl-tasks" id="pl-task-list"></div>
+    <button class="pl-add-btn" onclick="plAddTask()">+ Nieuwe taak toevoegen</button>
+  </div>
+
+  <!-- ADD TASK OVERLAY -->
+  <div class="overlay" id="pl-overlay">
+    <div class="modal" style="max-width:600px;">
+      <div class="mhead">
+        <div>
+          <div class="mtitle">&#x1F6A2; Nieuwe planningstask</div>
+          <div style="font-size:11px;color:var(--muted2);margin-top:4px;">Schip, kraan of overige activiteit inplannen</div>
+        </div>
+        <button class="btn btn-cancel" onclick="plCloseModal()">&#x2715;</button>
+      </div>
+      <div class="mbody">
+        <div class="row-block">
+          <div class="rbt">Type activiteit</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;" id="pl-type-btns">
+            <button class="pl-type-btn active" data-type="ship" onclick="plSelectType(this,'ship')">&#x1F6A2; Schip</button>
+            <button class="pl-type-btn" data-type="crane" onclick="plSelectType(this,'crane')">&#x1F3D7; Kraan</button>
+            <button class="pl-type-btn" data-type="truck" onclick="plSelectType(this,'truck')">&#x1F69A; Vrachtwagen</button>
+            <button class="pl-type-btn" data-type="maintenance" onclick="plSelectType(this,'maintenance')">&#x1F527; Onderhoud</button>
+            <button class="pl-type-btn" data-type="other" onclick="plSelectType(this,'other')">&#x1F4CB; Overig</button>
+          </div>
+        </div>
+        <div class="form-2 row-block">
+          <div class="fg"><label>Naam / Scheepsnaam</label><input id="pl-f-name" placeholder="bijv. M.V. Rotterdam"></div>
+          <div class="fg"><label>Product</label><input id="pl-f-product" placeholder="bijv. Slagzand, Ethanol..."></div>
+        </div>
+        <div class="form-2 row-block">
+          <div class="fg"><label>Dienst</label>
+            <select id="pl-f-shift" style="background:var(--surface2);border:1px solid var(--border2);border-radius:7px;padding:7px 10px;font-size:12px;color:var(--text);font-family:'DM Sans',sans-serif;outline:none;width:100%;">
+              <option value="A">Dienst A (07:00–15:00)</option>
+              <option value="B">Dienst B (15:00–23:00)</option>
+              <option value="C">Dienst C (23:00–07:00)</option>
+            </select>
+          </div>
+          <div class="fg"><label>Status</label>
+            <select id="pl-f-status" style="background:var(--surface2);border:1px solid var(--border2);border-radius:7px;padding:7px 10px;font-size:12px;color:var(--text);font-family:'DM Sans',sans-serif;outline:none;width:100%;">
+              <option value="plan">Gepland</option>
+              <option value="bezig">Bezig</option>
+              <option value="klaar">Afgerond</option>
+              <option value="wacht">Wacht op...</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-2 row-block">
+          <div class="fg"><label>Startdatum</label><input id="pl-f-start" type="date"></div>
+          <div class="fg"><label>Einddatum</label><input id="pl-f-end" type="date"></div>
+        </div>
+        <div class="form-2 row-block">
+          <div class="fg"><label>Starttijd</label><input id="pl-f-starttime" type="time" value="06:00"></div>
+          <div class="fg"><label>Eindtijd</label><input id="pl-f-endtime" type="time" value="14:00"></div>
+        </div>
+        <div class="row-block">
+          <div class="fg"><label>Gepland (ton/m3)</label><input id="pl-f-planned" placeholder="bijv. 5000 ton"></div>
+        </div>
+        <div class="row-block">
+          <div class="fg"><label>Opmerkingen</label><input id="pl-f-notes" placeholder="Bijzonderheden, instructies..."></div>
+        </div>
+      </div>
+      <div class="mfoot">
+        <span id="pl-edit-id" style="font-size:11px;color:var(--muted2);"></span>
+        <div class="mfoot-right">
+          <button class="btn btn-cancel" onclick="plCloseModal()">Annuleren</button>
+          <button class="btn btn-save" onclick="plSaveTask()" style="background:#9b59b6;">&#x1F4BE; Opslaan</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- MODAL -->
@@ -615,13 +867,14 @@ function jumpToDate(v){if(v)setViewing(v);}
 
 // ══ PAGE SWITCHING ══
 function switchPage(page){
-  ['board','actions','dagorder'].forEach(p=>{
+  ['board','actions','dagorder','planning'].forEach(p=>{
     const tab=document.getElementById('tab-'+p);
     if(tab) tab.classList.toggle('active',p===page);
   });
   document.getElementById('page-board').classList.toggle('hidden',page!=='board');
   document.getElementById('page-actions').classList.toggle('visible',page==='actions');
   document.getElementById('page-dagorder').classList.toggle('visible',page==='dagorder');
+  document.getElementById('page-planning').classList.toggle('visible',page==='planning');
   if(page==='actions'){
     alCurrentFilter='all';
     ['all','open','overdue','p1','p2','done'].forEach(id=>{
@@ -631,6 +884,7 @@ function switchPage(page){
     renderActionList();
   }
   if(page==='dagorder') setDOViewing(doViewing);
+  if(page==='planning') plRender();
 }
 
 // ══ SQDC BOARD FILTER ══
@@ -1028,9 +1282,330 @@ function exportDagorderPDF(){
   },300);
 }
 
+
+// ══ PLANNING ══════════════════════════════════════════════════════════
+const SHIP_ICONS = { ship:'🚢', crane:'🏗️', truck:'🚛', maintenance:'🔧', other:'📋' };
+const STATUS_LABELS = { plan:'Gepland', bezig:'Bezig', klaar:'Afgerond', wacht:'Wacht op...' };
+const DAYS_NL = ['zo','ma','di','wo','do','vr','za'];
+
+let plCurrentWeek = getISOWeek(new Date());
+let plCurrentYear = new Date().getFullYear();
+let plCurrentShift = 'all';
+let plCurrentView = 'week';
+let plEditingId = null;
+let plSelectedType = 'ship';
+
+function getISOWeek(d) {
+  const dt = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const dn = dt.getUTCDay() || 7;
+  dt.setUTCDate(dt.getUTCDate() + 4 - dn);
+  const ys = new Date(Date.UTC(dt.getUTCFullYear(), 0, 1));
+  return Math.ceil((((dt - ys) / 86400000) + 1) / 7);
+}
+
+function weekMonday(year, week) {
+  const jan4 = new Date(Date.UTC(year, 0, 4));
+  const dn = jan4.getUTCDay() || 7;
+  const mon = new Date(jan4);
+  mon.setUTCDate(jan4.getUTCDate() - dn + 1 + (week - 1) * 7);
+  return mon;
+}
+
+function plLoadTasks() {
+  try { return JSON.parse(localStorage.getItem('pl:tasks') || '[]'); } catch(e) { return []; }
+}
+function plSaveTasks(tasks) {
+  try { localStorage.setItem('pl:tasks', JSON.stringify(tasks)); } catch(e) {}
+}
+
+function plSetShift(s) {
+  plCurrentShift = s;
+  ['A','B','C','all'].forEach(x => {
+    const b = document.getElementById('pl-sh-'+x);
+    if (!b) return;
+    b.className = 'pl-shift-tab';
+    if (x === s) b.classList.add('active-'+(s==='all'?'all':s));
+  });
+  plRender();
+}
+
+function plSetView(v) {
+  plCurrentView = v;
+  ['week','hour','list'].forEach(x => {
+    const b = document.getElementById('pl-view-'+x);
+    if (b) b.classList.toggle('active', x === v);
+    const el = document.getElementById('pl-'+x+'-view');
+    if (el) el.style.display = x === v ? 'block' : 'none';
+  });
+  plRender();
+}
+
+function plShiftWeek(n) { plCurrentWeek += n; if(plCurrentWeek>52){plCurrentWeek=1;plCurrentYear++;}if(plCurrentWeek<1){plCurrentWeek=52;plCurrentYear--;} plRender(); }
+function plGoToday() { plCurrentWeek = getISOWeek(new Date()); plCurrentYear = new Date().getFullYear(); plRender(); }
+
+function plRender() {
+  const mon = weekMonday(plCurrentYear, plCurrentWeek);
+  const days = Array.from({length:7}, (_,i) => { const d = new Date(mon); d.setUTCDate(mon.getUTCDate()+i); return d; });
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  // Week label
+  const mon_s = days[0].toLocaleDateString('nl-NL',{day:'2-digit',month:'short'});
+  const sun_s = days[6].toLocaleDateString('nl-NL',{day:'2-digit',month:'short',year:'numeric'});
+  document.getElementById('pl-week-label').textContent = `Week ${plCurrentWeek} — ${mon_s} t/m ${sun_s}`;
+
+  const allTasks = plLoadTasks();
+  const tasks = plCurrentShift === 'all' ? allTasks : allTasks.filter(t => t.shift === plCurrentShift);
+
+  if (plCurrentView === 'week') plRenderWeek(days, tasks, today);
+  if (plCurrentView === 'hour') plRenderHour(days[0], allTasks, today);
+  if (plCurrentView === 'list') plRenderList(tasks);
+}
+
+function plRenderWeek(days, tasks, today) {
+  const resources = [
+    { id:'ships', label:'Schepen', icon:'🚢', types:['ship'] },
+    { id:'cranes', label:'Kranen', icon:'🏗️', types:['crane'] },
+    { id:'trucks', label:'Vrachtwagens', icon:'🚛', types:['truck'] },
+    { id:'maintenance', label:'Onderhoud', icon:'🔧', types:['maintenance'] },
+    { id:'other', label:'Overig', icon:'📋', types:['other'] },
+  ];
+  const grid = document.getElementById('pl-week-grid');
+  const dayNames = ['Ma','Di','Wo','Do','Vr','Za','Zo'];
+
+  let html = '<div class="pl-week-head">';
+  html += '<div class="pl-week-head-cell" style="text-align:left;padding-left:12px;">Activiteit</div>';
+  days.forEach((d,i) => {
+    const dt = new Date(d); dt.setHours(0,0,0,0);
+    const isToday = dt.getTime() === today.getTime();
+    html += `<div class="pl-week-head-cell${isToday?' today':''}">${dayNames[i]}<br><span style="font-size:11px;font-weight:400;">${d.getUTCDate()} ${d.toLocaleDateString('nl-NL',{month:'short'})}</span></div>`;
+  });
+  html += '</div>';
+
+  resources.forEach(res => {
+    const resTasks = tasks.filter(t => res.types.includes(t.type));
+    html += `<div class="pl-week-row">`;
+    html += `<div class="pl-resource-label"><span style="font-size:16px;">${res.icon}</span>${res.label}</div>`;
+    days.forEach((d,di) => {
+      const dt = new Date(d); dt.setHours(0,0,0,0);
+      const isToday = dt.getTime() === today.getTime();
+      const dStr = d.toISOString().split('T')[0];
+      const dayTasks = resTasks.filter(t => t.startDate <= dStr && t.endDate >= dStr);
+      html += `<div class="pl-week-cell${isToday?' today-col':''}">`;
+      if (dayTasks.length === 0 && res.id === 'ships') {
+        html += `<div style="height:40px;display:flex;align-items:center;justify-content:center;"><button onclick="plAddTaskForDay('${dStr}','${res.types[0]}')" style="background:transparent;border:1px dashed var(--border);border-radius:5px;color:var(--muted);font-size:10px;padding:3px 6px;cursor:pointer;width:100%;">+</button></div>`;
+      }
+      dayTasks.forEach(t => {
+        const shiftCls = 'shift-'+t.shift;
+        const statusCls = t.status==='klaar'?' status-done':t.status==='bezig'?' status-progress':'';
+        html += `<div class="pl-bar ${shiftCls}${statusCls}" onclick="plEditTask(${t.id})" title="${t.name} — ${STATUS_LABELS[t.status]||t.status}">`;
+        html += `${SHIP_ICONS[t.type]||'📋'} ${t.name}`;
+        if (t.product) html += ` <span style="opacity:.7;font-size:9px;">(${t.product})</span>`;
+        html += '</div>';
+      });
+      html += '</div>';
+    });
+    html += '</div>';
+  });
+
+  // Shift legend row
+  html += `<div style="display:flex;gap:12px;padding:8px 14px;border-top:1px solid var(--border);flex-wrap:wrap;">`;
+  html += `<span style="font-size:10px;color:var(--muted2);">Diensten:</span>`;
+  html += `<span class="pl-bar shift-A" style="font-size:10px;padding:2px 8px;">Dienst A (07-15)</span>`;
+  html += `<span class="pl-bar shift-B" style="font-size:10px;padding:2px 8px;">Dienst B (15-23)</span>`;
+  html += `<span class="pl-bar shift-C" style="font-size:10px;padding:2px 8px;">Dienst C (23-07)</span>`;
+  html += '</div>';
+
+  grid.innerHTML = html;
+}
+
+function plRenderHour(monday, allTasks, today) {
+  const grid = document.getElementById('pl-hour-grid');
+  const hours = Array.from({length:24},(_,i)=>i);
+  const shiftForHour = h => h>=7&&h<15?'A':h>=15&&h<23?'B':'C';
+  const shiftBg = h => `shift-${shiftForHour(h)}-bg`;
+
+  let html = '<div class="pl-hour-head"><div class="pl-hour-head-cell" style="text-align:left;padding-left:8px;">Activiteit</div>';
+  hours.forEach(h => {
+    const sep = (h===13||h===21)?'shift-sep':'';
+    html += `<div class="pl-hour-head-cell ${shiftBg(h)} ${sep}">${String(h).padStart(2,'0')}</div>`;
+  });
+  html += '</div>';
+
+  // Shift header spans
+  html += '<div class="pl-hour-head" style="border-bottom:2px solid var(--border2);">';
+  html += '<div class="pl-hour-head-cell" style="text-align:left;padding-left:8px;color:var(--muted);">dienst</div>';
+  html += '<div class="pl-hour-head-cell shift-c-bg shift-sep" style="grid-column:span 6;font-weight:700;color:#1a9e50;">C 23-07</div>';
+  html += '<div class="pl-hour-head-cell shift-a-bg shift-sep" style="grid-column:span 8;font-weight:700;color:#3498db;">A 07-15</div>';
+  html += '<div class="pl-hour-head-cell shift-b-bg shift-sep" style="grid-column:span 8;font-weight:700;color:#c49a00;">B 15-23</div>';
+  html += '<div class="pl-hour-head-cell shift-c-bg" style="grid-column:span 2;font-weight:700;color:#1a9e50;">C 22-24</div>';
+  html += '</div>';
+
+  const dayStr = monday.toISOString().split('T')[0];
+  const dayTasks = allTasks.filter(t => t.startDate <= dayStr && t.endDate >= dayStr);
+  const nowHour = new Date().getHours();
+
+  ['Schepen','Kranen','Vrachtwagens'].forEach((label, ri) => {
+    const types = [['ship'],['crane'],['truck']][ri];
+    const resTasks = dayTasks.filter(t => types.includes(t.type));
+    html += '<div class="pl-hour-row">';
+    html += `<div class="pl-hour-label">${SHIP_ICONS[types[0]]} ${label}</div>`;
+    hours.forEach(h => {
+      const isNow = h === nowHour;
+      html += `<div class="pl-hour-cell ${shiftBg(h)}${isNow?' now-line':''}">`;
+      resTasks.forEach(t => {
+        const startH = parseInt((t.startTime||'00:00').split(':')[0]);
+        const endH   = parseInt((t.endTime||'23:00').split(':')[0]);
+        if (h >= startH && h < endH) {
+          html += `<div style="position:absolute;inset:2px;border-radius:3px;background:rgba(155,89,182,.25);border:1px solid rgba(155,89,182,.4);font-size:8px;color:#9b59b6;overflow:hidden;padding:1px 3px;cursor:pointer;" onclick="plEditTask(${t.id})">${t.name}</div>`;
+        }
+      });
+      html += '</div>';
+    });
+    html += '</div>';
+  });
+
+  grid.innerHTML = html;
+}
+
+function plRenderList(tasks) {
+  const list = document.getElementById('pl-task-list');
+  if (!tasks.length) {
+    list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted2);font-size:13px;">Geen taken gevonden — klik op "Taak toevoegen" om te beginnen</div>';
+    return;
+  }
+  list.innerHTML = tasks.map(t => {
+    const statusCls = 'status-'+t.status;
+    const progress = t.status==='klaar'?100:t.status==='bezig'?50:t.status==='wacht'?10:0;
+    return `<div class="pl-task-card" onclick="plEditTask(${t.id})">
+      <div class="ship-icon">${SHIP_ICONS[t.type]||'📋'}</div>
+      <div class="pl-task-info">
+        <div class="pl-task-name">${t.name}</div>
+        <div class="pl-task-meta">
+          <span>${t.startDate} → ${t.endDate}</span>
+          ${t.startTime?`<span>${t.startTime}–${t.endTime}</span>`:''}
+          ${t.product?`<span>${t.product}</span>`:''}
+          ${t.planned?`<span>Gepland: ${t.planned}</span>`:''}
+        </div>
+      </div>
+      <div class="pl-task-badges">
+        <span class="pl-badge shift-${t.shift}">Dienst ${t.shift}</span>
+        <span class="pl-badge ${statusCls}">${STATUS_LABELS[t.status]||t.status}</span>
+        <div class="pl-progress-bar"><div class="pl-progress-fill" style="width:${progress}%;background:${progress===100?'var(--green)':progress>=50?'var(--yellow)':'var(--muted2)'}"></div></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function plAddTask() {
+  plEditingId = null;
+  document.getElementById('pl-f-name').value = '';
+  document.getElementById('pl-f-product').value = '';
+  document.getElementById('pl-f-shift').value = plCurrentShift === 'all' ? 'A' : plCurrentShift;
+  document.getElementById('pl-f-status').value = 'plan';
+  document.getElementById('pl-f-start').value = todayStr();
+  document.getElementById('pl-f-end').value = todayStr();
+  document.getElementById('pl-f-starttime').value = '06:00';
+  document.getElementById('pl-f-endtime').value = '14:00';
+  document.getElementById('pl-f-planned').value = '';
+  document.getElementById('pl-f-notes').value = '';
+  document.getElementById('pl-edit-id').textContent = 'Nieuwe taak';
+  plSelectedType = 'ship';
+  document.querySelectorAll('.pl-type-btn').forEach(b => b.classList.toggle('active', b.dataset.type === 'ship'));
+  document.getElementById('pl-overlay').classList.add('open');
+}
+
+function plAddTaskForDay(dateStr, type) {
+  plAddTask();
+  document.getElementById('pl-f-start').value = dateStr;
+  document.getElementById('pl-f-end').value = dateStr;
+  plSelectedType = type;
+  document.querySelectorAll('.pl-type-btn').forEach(b => b.classList.toggle('active', b.dataset.type === type));
+}
+
+function plEditTask(id) {
+  const tasks = plLoadTasks();
+  const t = tasks.find(x => x.id === id);
+  if (!t) return;
+  plEditingId = id;
+  document.getElementById('pl-f-name').value = t.name || '';
+  document.getElementById('pl-f-product').value = t.product || '';
+  document.getElementById('pl-f-shift').value = t.shift || 'A';
+  document.getElementById('pl-f-status').value = t.status || 'plan';
+  document.getElementById('pl-f-start').value = t.startDate || '';
+  document.getElementById('pl-f-end').value = t.endDate || '';
+  document.getElementById('pl-f-starttime').value = t.startTime || '06:00';
+  document.getElementById('pl-f-endtime').value = t.endTime || '14:00';
+  document.getElementById('pl-f-planned').value = t.planned || '';
+  document.getElementById('pl-f-notes').value = t.notes || '';
+  document.getElementById('pl-edit-id').textContent = 'Bewerken: '+t.name;
+  plSelectedType = t.type || 'ship';
+  document.querySelectorAll('.pl-type-btn').forEach(b => b.classList.toggle('active', b.dataset.type === plSelectedType));
+  document.getElementById('pl-overlay').classList.add('open');
+}
+
+function plSelectType(btn, type) {
+  plSelectedType = type;
+  document.querySelectorAll('.pl-type-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function plSaveTask() {
+  const name = document.getElementById('pl-f-name').value.trim();
+  if (!name) { showToast('Vul een naam in'); return; }
+  const tasks = plLoadTasks();
+  const task = {
+    id: plEditingId || Date.now(),
+    type: plSelectedType,
+    name,
+    product: document.getElementById('pl-f-product').value.trim(),
+    shift: document.getElementById('pl-f-shift').value,
+    status: document.getElementById('pl-f-status').value,
+    startDate: document.getElementById('pl-f-start').value,
+    endDate: document.getElementById('pl-f-end').value,
+    startTime: document.getElementById('pl-f-starttime').value,
+    endTime: document.getElementById('pl-f-endtime').value,
+    planned: document.getElementById('pl-f-planned').value.trim(),
+    notes: document.getElementById('pl-f-notes').value.trim(),
+  };
+  if (plEditingId) {
+    const idx = tasks.findIndex(t => t.id === plEditingId);
+    if (idx >= 0) tasks[idx] = task;
+  } else {
+    tasks.push(task);
+  }
+  plSaveTasks(tasks);
+  plCloseModal();
+  plRender();
+  showToast('Opgeslagen: '+name);
+}
+
+function plCloseModal() {
+  document.getElementById('pl-overlay').classList.remove('open');
+}
+
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
 
+// ══ THEME TOGGLE ══════════════════════════════════════
+function toggleTheme(){
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme') || 'dark';
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('idex:theme', next);
+  document.getElementById('theme-icon-moon').style.display = next === 'dark' ? 'block' : 'none';
+  document.getElementById('theme-icon-sun').style.display  = next === 'light' ? 'block' : 'none';
+}
+function initTheme(){
+  const saved = localStorage.getItem('idex:theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+  if(saved === 'light'){
+    document.getElementById('theme-icon-moon').style.display = 'none';
+    document.getElementById('theme-icon-sun').style.display  = 'block';
+  }
+}
+
 // ══ INIT ══
+initTheme();
 filterView('all');
 setViewing(todayStr());
 setTimeout(()=>{
