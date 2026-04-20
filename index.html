@@ -342,8 +342,12 @@ body.viewer-mode .viewer-banner{display:flex!important;}
   .overlay,.toast,.viewer-banner,.do-add-row,.do-entry-del,.do-shift-btn,
   .do-author-input,.do-meta > span{display:none!important;}
   .page{padding:10px!important;}
-  #page-actions{display:block!important;}
+  #page-actions{display:block!important;page-break-before:always;}
   #page-board{display:block!important;}
+  #page-dagorder{display:block!important;page-break-before:always;}
+  #page-planning{display:block!important;page-break-before:always;}
+  .grid{page-break-inside:avoid;}
+  .card{page-break-inside:avoid;}
   #page-dagorder{display:block!important;}
   .grid{grid-template-columns:1fr 1fr!important;gap:8px!important;}
   .card{border:1px solid #ccc!important;background:#fff!important;break-inside:avoid;}
@@ -372,7 +376,7 @@ body.viewer-mode .viewer-banner{display:flex!important;}
   .al-days.urgent {background:#fff3cd!important;color:#856404!important;}
   .al-days.ok     {background:#d4f5e2!important;color:#1a7a40!important;}
   .al-days.none   {background:#f0f0f0!important;color:#666!important;}
-  .do-section{border:1px solid #ccc!important;background:#fff!important;break-inside:avoid;}
+  .do-section{border:1px solid #ccc!important;background:#fff!important;break-inside:avoid;page-break-inside:avoid;}
   .do-sec-header{background:#f5f5f5!important;}
   .do-sec-title{color:#111!important;}
   .do-sec-body{display:block!important;}
@@ -388,6 +392,116 @@ body.viewer-mode .viewer-banner{display:flex!important;}
 
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(14px);background:var(--hes);color:#fff;padding:9px 18px;border-radius:9px;font-size:13px;font-weight:500;opacity:0;transition:all .3s;pointer-events:none;z-index:999;white-space:nowrap;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+/* ── WERKVERGUNNING ── */
+#page-wv{display:none;}
+#page-wv.visible{display:block;}
+.page-tab.active.tab-wv{color:#e67e22;}
+.wv-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.wv-title{font-family:"Syne",sans-serif;font-weight:800;font-size:18px;}
+.wv-demo-banner{background:rgba(230,126,34,.08);border:1px solid rgba(230,126,34,.25);border-radius:10px;padding:10px 16px;font-size:12px;color:#e67e22;display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.wv-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
+.wv-stat{background:var(--surface);border-radius:12px;border:1px solid var(--border);padding:14px 16px;box-shadow:0 2px 6px rgba(0,0,0,.05);}
+.wv-stat-val{font-family:"Syne",sans-serif;font-size:28px;font-weight:800;line-height:1;}
+.wv-stat-label{font-size:11px;color:var(--muted2);margin-top:4px;}
+.wv-filters{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+.wv-fbtn{padding:5px 12px;border-radius:7px;border:1px solid var(--border2);background:var(--surface2);color:var(--muted2);font-size:11px;font-weight:600;cursor:pointer;font-family:"DM Sans",sans-serif;transition:all .15s;}
+.wv-fbtn:hover{background:var(--surface3);color:var(--text);}
+.wv-fbtn.on{background:rgba(230,126,34,.2);color:#e67e22;border-color:rgba(230,126,34,.4);}
+.wv-grid{display:flex;flex-direction:column;gap:8px;}
+.wv-card{background:var(--surface);border-radius:12px;border:1px solid var(--border);padding:14px 16px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .15s;box-shadow:0 1px 4px rgba(0,0,0,.04);}
+.wv-card:hover{background:var(--surface2);transform:translateY(-1px);box-shadow:0 3px 10px rgba(0,0,0,.08);}
+.wv-status-dot{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.wv-status-dot svg{width:18px;height:18px;}
+.wv-status-open{background:rgba(52,152,219,.15);}
+.wv-status-active{background:rgba(46,204,113,.15);}
+.wv-status-expired{background:rgba(231,76,60,.15);}
+.wv-status-closed{background:rgba(90,122,153,.15);}
+.wv-info{flex:1;}
+.wv-name{font-weight:600;font-size:13px;}
+.wv-meta{font-size:11px;color:var(--muted2);margin-top:3px;display:flex;gap:10px;flex-wrap:wrap;}
+.wv-badges{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+.wv-badge{display:inline-block;padding:2px 8px;border-radius:5px;font-size:10px;font-weight:700;}
+.wv-type-hot{background:rgba(231,76,60,.15);color:#e74c3c;}
+.wv-type-cold{background:rgba(52,152,219,.15);color:#3498db;}
+.wv-type-elec{background:rgba(245,197,66,.15);color:#c49a00;}
+.wv-type-confined{background:rgba(155,89,182,.15);color:#9b59b6;}
+.wv-type-height{background:rgba(230,126,34,.15);color:#e67e22;}
+.wv-type-general{background:var(--surface2);color:var(--muted2);}
+.wv-status-badge-open{background:rgba(52,152,219,.15);color:#3498db;}
+.wv-status-badge-active{background:rgba(46,204,113,.15);color:#2ecc71;}
+.wv-status-badge-expired{background:rgba(231,76,60,.15);color:#e74c3c;}
+.wv-status-badge-closed{background:rgba(90,122,153,.15);color:#5a7a99;}
+/* WV Detail modal */
+.wv-detail{background:var(--surface);border:1px solid var(--border2);border-radius:16px;width:100%;max-width:700px;box-shadow:0 24px 60px rgba(0,0,0,.5);}
+.wv-detail-header{padding:16px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.wv-detail-title{font-family:"Syne",sans-serif;font-weight:700;font-size:16px;}
+.wv-section{margin-bottom:14px;}
+.wv-section-title{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted2);margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid var(--border);}
+.wv-field-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.wv-field{background:var(--surface2);border-radius:7px;padding:8px 10px;}
+.wv-field-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted2);margin-bottom:3px;}
+.wv-field-value{font-size:13px;font-weight:500;}
+.wv-risk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.wv-risk-item{background:var(--surface2);border-radius:6px;padding:6px 8px;font-size:11px;display:flex;align-items:center;gap:5px;}
+.wv-risk-item.active{background:rgba(231,76,60,.12);border:1px solid rgba(231,76,60,.25);}
+.wv-risk-item.active span{color:#e74c3c;font-weight:600;}
+.wv-sign-row{display:flex;gap:12px;}
+.wv-sign-box{flex:1;background:var(--surface2);border-radius:8px;padding:10px 12px;text-align:center;}
+.wv-sign-name{font-size:12px;font-weight:600;color:var(--text);}
+.wv-sign-role{font-size:10px;color:var(--muted2);margin-top:2px;}
+.wv-sign-status{font-size:11px;font-weight:700;margin-top:6px;}
+.wv-signed{color:var(--green);}
+.wv-unsigned{color:var(--muted);}
+.wv-add-btn{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;background:rgba(230,126,34,.15);color:#e67e22;border:1px solid rgba(230,126,34,.3);font-size:13px;font-weight:500;font-family:"DM Sans",sans-serif;cursor:pointer;transition:all .15s;}
+.wv-add-btn:hover{background:rgba(230,126,34,.25);}
+
+/* ── SHIFTRAPPORT INLINE ── */
+.sr-inline-btn{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:8px;border:1px solid var(--border2);background:var(--surface);cursor:pointer;font-family:"DM Sans",sans-serif;font-size:12px;font-weight:500;color:var(--muted2);transition:all .15s;}
+.sr-inline-btn:hover{background:var(--surface2);color:var(--text);}
+.sr-inline-btn.open-A{background:rgba(52,152,219,.15);color:#3498db;border-color:rgba(52,152,219,.4);}
+.sr-inline-btn.open-B{background:rgba(245,197,66,.15);color:#c49a00;border-color:rgba(245,197,66,.4);}
+.sr-inline-btn.open-C{background:rgba(46,204,113,.15);color:#1a9e50;border-color:rgba(46,204,113,.4);}
+.sr-inline-btn.open-T{background:rgba(155,89,182,.15);color:#9b59b6;border-color:rgba(155,89,182,.4);}
+.sr-inline-badge{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:5px;font-size:11px;font-weight:800;}
+.sri-A{background:rgba(52,152,219,.2);color:#3498db;}
+.sri-B{background:rgba(245,197,66,.2);color:#c49a00;}
+.sri-C{background:rgba(46,204,113,.2);color:#1a9e50;}
+.sri-time{font-size:10px;opacity:.7;}
+.sri-check{font-size:11px;color:var(--green);}
+.sr-upload-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:7px;background:rgba(142,68,173,.12);color:#8e44ad;border:1px solid rgba(142,68,173,.25);cursor:pointer;font-size:12px;font-weight:500;font-family:"DM Sans",sans-serif;transition:all .15s;}
+.sr-upload-btn:hover{background:rgba(142,68,173,.22);}
+
+/* ── SHIFTRAPPORTEN ── */
+#page-shifts{display:none;}
+#page-shifts.visible{display:block;}
+.page-tab.active.tab-shifts{color:#8e44ad;}
+.sr-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.sr-title{font-family:"Syne",sans-serif;font-weight:800;font-size:18px;}
+.sr-shift-btns{display:flex;gap:6px;}
+.sr-btn{display:flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;border:1px solid var(--border2);background:var(--surface);cursor:pointer;font-family:"DM Sans",sans-serif;font-size:13px;font-weight:600;color:var(--muted2);transition:all .18s;}
+.sr-btn:hover{background:var(--surface2);color:var(--text);}
+.sr-btn.active-A{background:rgba(52,152,219,.15);color:#3498db;border-color:rgba(52,152,219,.4);}
+.sr-btn.active-B{background:rgba(245,197,66,.15);color:#c49a00;border-color:rgba(245,197,66,.4);}
+.sr-btn.active-C{background:rgba(46,204,113,.15);color:#1a9e50;border-color:rgba(46,204,113,.4);}
+.sr-btn .sr-shift-badge{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:7px;font-size:14px;font-weight:800;}
+.sr-btn.active-A .sr-shift-badge{background:rgba(52,152,219,.2);color:#3498db;}
+.sr-btn.active-B .sr-shift-badge{background:rgba(245,197,66,.2);color:#c49a00;}
+.sr-btn.active-C .sr-shift-badge{background:rgba(46,204,113,.2);color:#1a9e50;}
+.sr-btn .sr-shift-info{text-align:left;}
+.sr-btn .sr-shift-name{font-size:13px;font-weight:700;line-height:1.2;}
+.sr-btn .sr-shift-time{font-size:10px;opacity:.7;margin-top:2px;}
+.sr-pdf-area{background:var(--surface);border-radius:14px;border:1px solid var(--border);overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.sr-pdf-toolbar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--border);background:var(--surface2);}
+.sr-pdf-toolbar-left{display:flex;align-items:center;gap:10px;}
+.sr-pdf-meta{font-size:12px;color:var(--muted2);}
+.sr-pdf-meta strong{color:var(--text);}
+.sr-no-report{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px;gap:12px;color:var(--muted2);}
+.sr-no-report svg{width:48px;height:48px;opacity:.3;}
+.sr-upload-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;background:rgba(142,68,173,.15);color:#8e44ad;border:1px solid rgba(142,68,173,.3);cursor:pointer;font-size:13px;font-weight:500;font-family:"DM Sans",sans-serif;transition:all .15s;}
+.sr-upload-btn:hover{background:rgba(142,68,173,.25);}
+.sr-date-nav{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:7px 12px;margin-bottom:14px;}
+#sr-date-label{font-family:"Syne",sans-serif;font-weight:700;font-size:14px;flex:1;text-align:center;}
+
 /* ── PLANNING ── */
 #page-planning{display:none;}
 #page-planning.visible{display:block;}
@@ -515,6 +629,8 @@ body.viewer-mode .viewer-banner{display:flex!important;}
       <button class="sqdc-btn" id="filter-cost" onclick="filterView('cost')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg><span>Cost</span></button>
     </div>
     <div style="width:1px;height:28px;background:var(--border2);"></div>
+    <a href="iwex.html" style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:7px;background:rgba(26,111,186,.12);color:#1a6fba;border:1px solid rgba(26,111,186,.25);font-size:12px;font-weight:700;text-decoration:none;font-family:'DM Sans',sans-serif;" title="Wekelijks overzicht">IWEX</a>
+    <a href="imex.html" style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:7px;background:rgba(155,89,182,.12);color:#9b59b6;border:1px solid rgba(155,89,182,.25);font-size:12px;font-weight:700;text-decoration:none;font-family:'DM Sans',sans-serif;" title="Maandelijks overzicht">IMEX</a>
     <div class="badge" id="week-badge">Week —</div>
     <button class="btn btn-theme" id="theme-toggle-btn" onclick="toggleTheme()" title="Wissel thema">
       <svg id="theme-icon-moon" viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>
@@ -544,6 +660,11 @@ body.viewer-mode .viewer-banner{display:flex!important;}
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/></svg>
     Planning
   </button>
+  <button class="page-tab tab-wv" id="tab-wv" onclick="switchPage('wv')">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 14l-3-3 1.41-1.41L11 12.17l4.59-4.58L17 9l-6 6z"/></svg>
+    Werkvergunning
+  </button>
+
 </div>
 
 <!-- VIEWER BANNER -->
@@ -561,6 +682,63 @@ body.viewer-mode .viewer-banner{display:flex!important;}
     <button class="nav-btn" onclick="goToday()">Vandaag</button>
     <button class="nav-btn" onclick="shiftDay(1)">&#9654;</button>
   </div>
+  <!-- SHIFTRAPPORT INLINE -->
+  <div id="sr-inline-bar" style="margin-bottom:12px;">
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+      <span style="font-size:11px;font-weight:600;color:var(--muted2);text-transform:uppercase;letter-spacing:.5px;">Shiftrapporten:</span>
+      <button class="sr-inline-btn" id="sri-btn-A" onclick="srInlineSelect('A')">
+        <span class="sr-inline-badge sri-A">A</span>
+        <span class="sri-label">Dagdienst <span class="sri-time">07-15</span></span>
+        <span id="sri-check-A" class="sri-check"></span>
+      </button>
+      <button class="sr-inline-btn" id="sri-btn-B" onclick="srInlineSelect('B')">
+        <span class="sr-inline-badge sri-B">B</span>
+        <span class="sri-label">Avonddienst <span class="sri-time">15-23</span></span>
+        <span id="sri-check-B" class="sri-check"></span>
+      </button>
+      <button class="sr-inline-btn" id="sri-btn-C" onclick="srInlineSelect('C')">
+        <span class="sr-inline-badge sri-C">C</span>
+        <span class="sri-label">Nachtdienst <span class="sri-time">23-07</span></span>
+        <span id="sri-check-C" class="sri-check"></span>
+      </button>
+      <div style="width:1px;height:24px;background:var(--border2);margin:0 4px;"></div>
+      <button class="sr-inline-btn" id="sri-btn-T" onclick="srInlineSelect('T')">
+        <span class="sr-inline-badge" style="background:rgba(155,89,182,.2);color:#9b59b6;">T</span>
+        <span class="sri-label">Technisch <span class="sri-time">Ultimo</span></span>
+        <span id="sri-check-T" class="sri-check"></span>
+      </button>
+      <span id="sri-upload-area" style="display:none;">
+        <label class="sr-upload-btn" style="padding:5px 10px;font-size:11px;">
+          &#x2B06; Upload PDF
+          <input type="file" accept=".pdf" style="display:none;" onchange="srUploadPDF(this)">
+        </label>
+      </span>
+      <button id="sri-close-btn" onclick="srInlineClose()" style="display:none;background:transparent;border:none;color:var(--muted2);cursor:pointer;font-size:16px;padding:0 4px;">&#x2715;</button>
+    </div>
+    <!-- PDF VIEWER INLINE -->
+    <div id="sri-viewer" style="display:none;margin-top:10px;background:var(--surface);border-radius:12px;border:1px solid var(--border);overflow:hidden;">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:var(--surface2);border-bottom:1px solid var(--border);">
+        <span id="sri-pdf-meta" style="font-size:12px;color:var(--muted2);"></span>
+        <div style="display:flex;gap:6px;">
+          <label class="sr-upload-btn" style="padding:4px 10px;font-size:11px;">
+            &#x2B06; Ander rapport
+            <input type="file" accept=".pdf" style="display:none;" onchange="srUploadPDF(this)">
+          </label>
+          <button class="btn btn-pdf" onclick="srDownloadPDF()" style="padding:4px 10px;font-size:11px;">&#x2193; Download</button>
+        </div>
+      </div>
+      <div id="sri-no-report" style="display:flex;flex-direction:column;align-items:center;padding:40px;gap:8px;color:var(--muted2);">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:36px;height:36px;opacity:.3;"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 7V3.5L18.5 9H13z"/></svg>
+        <div style="font-size:13px;font-weight:600;" id="sri-no-msg">Geen rapport beschikbaar</div>
+        <label class="sr-upload-btn">
+          &#x2B06; Upload shiftrapport PDF
+          <input type="file" accept=".pdf" style="display:none;" onchange="srUploadPDF(this)">
+        </label>
+      </div>
+      <iframe id="sri-iframe" style="display:none;width:100%;height:70vh;border:none;" title="Shiftrapport"></iframe>
+    </div>
+  </div>
+
   <div class="no-data-banner" id="no-data-banner">
     &#x1F4ED; Geen gegevens voor deze dag &#x2014; klik op <strong>"Voeg dag in"</strong> om data toe te voegen.
   </div>
@@ -754,6 +932,133 @@ body.viewer-mode .viewer-banner{display:flex!important;}
   </div>
 </div>
 
+
+<!-- SHIFTRAPPORTEN PAGE -->
+<div id="page-shifts">
+  <div class="sr-header">
+    <div class="sr-title">&#x1F4C4; Shiftrapporten</div>
+    <div style="font-size:11px;color:var(--muted2);">Klik op een dienst om het rapport te bekijken</div>
+  </div>
+
+  <!-- Date nav -->
+  <div class="sr-date-nav">
+    <button class="nav-btn" onclick="srShiftDay(-1)">&#9664;</button>
+    <div id="sr-date-label">&#x2014;</div>
+    <input type="date" id="sr-date-picker" onchange="srJumpDate(this.value)">
+    <button class="nav-btn" onclick="srGoToday()">Vandaag</button>
+    <button class="nav-btn" onclick="srShiftDay(1)">&#9654;</button>
+  </div>
+
+  <!-- 3 dienst buttons -->
+  <div class="sr-shift-btns" style="margin-bottom:14px;">
+    <button class="sr-btn" id="sr-btn-A" onclick="srSelectShift('A')">
+      <div class="sr-shift-badge">A</div>
+      <div class="sr-shift-info">
+        <div class="sr-shift-name">Dagdienst</div>
+        <div class="sr-shift-time">07:00 &#x2013; 15:00</div>
+      </div>
+      <span id="sr-status-A" style="margin-left:auto;font-size:10px;"></span>
+    </button>
+    <button class="sr-btn" id="sr-btn-B" onclick="srSelectShift('B')">
+      <div class="sr-shift-badge">B</div>
+      <div class="sr-shift-info">
+        <div class="sr-shift-name">Avonddienst</div>
+        <div class="sr-shift-time">15:00 &#x2013; 23:00</div>
+      </div>
+      <span id="sr-status-B" style="margin-left:auto;font-size:10px;"></span>
+    </button>
+    <button class="sr-btn" id="sr-btn-C" onclick="srSelectShift('C')">
+      <div class="sr-shift-badge">C</div>
+      <div class="sr-shift-info">
+        <div class="sr-shift-name">Nachtdienst</div>
+        <div class="sr-shift-time">23:00 &#x2013; 07:00</div>
+      </div>
+      <span id="sr-status-C" style="margin-left:auto;font-size:10px;"></span>
+    </button>
+  </div>
+
+  <!-- PDF viewer area -->
+  <div class="sr-pdf-area">
+    <div class="sr-pdf-toolbar">
+      <div class="sr-pdf-toolbar-left">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;color:var(--hes);"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 7V3.5L18.5 9H13z"/></svg>
+        <div class="sr-pdf-meta" id="sr-pdf-meta">Selecteer een dienst om het rapport te bekijken</div>
+      </div>
+      <div style="display:flex;gap:6px;">
+        <label class="sr-upload-btn" id="sr-upload-label" style="display:none;">
+          <svg viewBox="0 0 24 24" fill="currentColor" style="width:13px;height:13px;"><path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/></svg>
+          Upload rapport
+          <input type="file" accept=".pdf" id="sr-file-input" style="display:none;" onchange="srUploadPDF(this)">
+        </label>
+        <button class="btn btn-pdf" id="sr-download-btn" style="display:none;" onclick="srDownloadPDF()">
+          <svg viewBox="0 0 24 24" fill="currentColor" style="width:13px;height:13px;"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          Download
+        </button>
+      </div>
+    </div>
+    <div id="sr-pdf-viewer" style="min-height:400px;">
+      <div class="sr-no-report" id="sr-no-report">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM8 16h8v1.5H8zm0-3h8v1.5H8zm0-3h5v1.5H8z"/></svg>
+        <div style="font-size:14px;font-weight:600;">Geen rapport beschikbaar</div>
+        <div style="font-size:12px;">Selecteer een dienst of upload een PDF rapport</div>
+        <label class="sr-upload-btn" style="margin-top:8px;">
+          <svg viewBox="0 0 24 24" fill="currentColor" style="width:13px;height:13px;"><path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/></svg>
+          Upload rapport
+          <input type="file" accept=".pdf" id="sr-file-input2" style="display:none;" onchange="srUploadPDF(this)">
+        </label>
+      </div>
+      <iframe id="sr-iframe" style="display:none;width:100%;height:75vh;border:none;" title="Shiftrapport"></iframe>
+    </div>
+  </div>
+</div>
+
+
+<!-- WERKVERGUNNING PAGE -->
+<div id="page-wv">
+  <div class="wv-header">
+    <div class="wv-title">&#x1F6E1;&#xFE0F; Werkvergunningen</div>
+    <button class="wv-add-btn" onclick="wvOpenNew()">
+      <svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+      Nieuwe vergunning
+    </button>
+  </div>
+
+  <!-- Demo banner -->
+  <div class="wv-demo-banner">
+    <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;flex-shrink:0;"><path d="M12 2L1 21h22L12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+    <span><strong>Demo versie</strong> — Dit is een voorbeeld van de digitale werkvergunning die in Fase 6 (oktober-november 2026) wordt geïmplementeerd. Papieren formulieren worden vervangen door dit digitale systeem.</span>
+  </div>
+
+  <!-- Stats -->
+  <div class="wv-stats" id="wv-stats"></div>
+
+  <!-- Filters -->
+  <div class="wv-filters">
+    <button class="wv-fbtn on" id="wvf-all" onclick="wvFilter('all')">Alle</button>
+    <button class="wv-fbtn" id="wvf-active" onclick="wvFilter('active')">&#x1F7E2; Actief</button>
+    <button class="wv-fbtn" id="wvf-open" onclick="wvFilter('open')">&#x1F535; Open</button>
+    <button class="wv-fbtn" id="wvf-expired" onclick="wvFilter('expired')">&#x1F534; Verlopen</button>
+    <button class="wv-fbtn" id="wvf-closed" onclick="wvFilter('closed')">&#x26AB; Afgesloten</button>
+  </div>
+
+  <!-- WV List -->
+  <div class="wv-grid" id="wv-grid"></div>
+
+  <!-- WV Detail overlay -->
+  <div class="overlay" id="wv-overlay">
+    <div class="wv-detail">
+      <div class="wv-detail-header">
+        <div>
+          <div class="wv-detail-title" id="wvd-title">Werkvergunning details</div>
+          <div style="font-size:11px;color:var(--muted2);margin-top:3px;" id="wvd-meta"></div>
+        </div>
+        <button class="btn btn-cancel" onclick="wvCloseDetail()">&#x2715;</button>
+      </div>
+      <div class="mbody" id="wvd-body"></div>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL -->
 <div class="overlay" id="overlay">
   <div class="modal">
@@ -860,6 +1165,10 @@ function setViewing(s){
   document.getElementById('current-date-label').innerHTML=friendlyDate(s)+dot;
   document.getElementById('date-picker').value=s;
   renderBoard(s);
+  // sync shiftrapport to same date
+  srViewing=s;
+  srUpdateInlineButtons();
+  if(srCurrentShift) srInlineShowPDF(srCurrentShift);
 }
 function shiftDay(n){setViewing(shiftDateStr(viewing,n));}
 function goToday(){setViewing(todayStr());}
@@ -867,7 +1176,7 @@ function jumpToDate(v){if(v)setViewing(v);}
 
 // ══ PAGE SWITCHING ══
 function switchPage(page){
-  ['board','actions','dagorder','planning'].forEach(p=>{
+  ['board','actions','dagorder','planning','shifts','wv'].forEach(p=>{
     const tab=document.getElementById('tab-'+p);
     if(tab) tab.classList.toggle('active',p===page);
   });
@@ -875,6 +1184,8 @@ function switchPage(page){
   document.getElementById('page-actions').classList.toggle('visible',page==='actions');
   document.getElementById('page-dagorder').classList.toggle('visible',page==='dagorder');
   document.getElementById('page-planning').classList.toggle('visible',page==='planning');
+  document.getElementById('page-shifts').classList.toggle('visible',page==='shifts');
+  document.getElementById('page-wv').classList.toggle('visible',page==='wv');
   if(page==='actions'){
     alCurrentFilter='all';
     ['all','open','overdue','p1','p2','done'].forEach(id=>{
@@ -885,6 +1196,8 @@ function switchPage(page){
   }
   if(page==='dagorder') setDOViewing(doViewing);
   if(page==='planning') plRender();
+  if(page==='shifts') srSetViewing(srViewing);
+  if(page==='wv') wvRender();
 }
 
 // ══ SQDC BOARD FILTER ══
@@ -1583,6 +1896,418 @@ function plCloseModal() {
   document.getElementById('pl-overlay').classList.remove('open');
 }
 
+
+// ══ SHIFTRAPPORTEN ════════════════════════════════════════════════════
+let srViewing = todayStr();
+let srCurrentShift = null;
+
+// Storage: save PDF as base64 per date+shift
+function srKey(dateStr, shift) { return 'sr:' + dateStr + ':' + shift; }
+function srSavePDF(dateStr, shift, b64) {
+  try { localStorage.setItem(srKey(dateStr, shift), b64); } catch(e) {
+    showToast('PDF te groot voor lokale opslag — gebruik SharePoint');
+  }
+}
+function srLoadPDF(dateStr, shift) {
+  try { return localStorage.getItem(srKey(dateStr, shift)); } catch(e) { return null; }
+}
+function srHasPDF(dateStr, shift) { return !!srLoadPDF(dateStr, shift); }
+
+function srSetViewing(s) {
+  srViewing = s;
+  // update inline buttons
+  srUpdateInlineButtons();
+  if (srCurrentShift) srInlineShowPDF(srCurrentShift);
+}
+function srUpdateInlineButtons() {
+  ['A','B','C','T'].forEach(sh => {
+    const check = document.getElementById('sri-check-'+sh);
+    if (check) check.textContent = srHasPDF(srViewing, sh) ? '✓' : '';
+  });
+}
+function srShiftDay(n) { srSetViewing(shiftDateStr(srViewing, n)); }
+function srGoToday() { srSetViewing(todayStr()); }
+function srJumpDate(v) { if(v) srSetViewing(v); }
+
+function srUpdateButtons() {
+  ['A','B','C'].forEach(sh => {
+    const has = srHasPDF(srViewing, sh);
+    const el = document.getElementById('sr-status-'+sh);
+    if (el) {
+      el.textContent = has ? '✓' : '';
+      el.style.color = has ? 'var(--green)' : '';
+    }
+  });
+}
+
+function srSelectShift(shift) {
+  srCurrentShift = shift;
+}
+
+function srInlineSelect(shift) {
+  srCurrentShift = shift;
+  // Toggle: if already open same shift, close it
+  const viewer = document.getElementById('sri-viewer');
+  const wasOpen = viewer.style.display !== 'none';
+  const prevShift = viewer.dataset.shift;
+  if (wasOpen && prevShift === shift) {
+    srInlineClose();
+    return;
+  }
+  viewer.dataset.shift = shift;
+  // Update button styles
+  ['A','B','C','T'].forEach(s => {
+    const btn = document.getElementById('sri-btn-'+s);
+    if (!btn) return;
+    btn.className = 'sr-inline-btn';
+    if (s === shift) btn.classList.add('open-'+s);
+  });
+  document.getElementById('sri-upload-area').style.display = 'none';
+  document.getElementById('sri-close-btn').style.display = 'block';
+  viewer.style.display = 'block';
+  srInlineShowPDF(shift);
+}
+
+function srInlineClose() {
+  document.getElementById('sri-viewer').style.display = 'none';
+  document.getElementById('sri-close-btn').style.display = 'none';
+  document.getElementById('sri-iframe').style.display = 'none';
+  document.getElementById('sri-iframe').src = '';
+  ['A','B','C'].forEach(s => {
+    const btn = document.getElementById('sri-btn-'+s);
+    if (btn) btn.className = 'sr-inline-btn';
+  });
+  srCurrentShift = null;
+}
+
+function srInlineShowPDF(shift) {
+  const b64 = srLoadPDF(srViewing, shift);
+  const iframe = document.getElementById('sri-iframe');
+  const noReport = document.getElementById('sri-no-report');
+  const meta = document.getElementById('sri-pdf-meta');
+  const shiftNames = { A:'Dagdienst (07-15)', B:'Avonddienst (15-23)', C:'Nachtdienst (23-07)', T:'Technisch rapport (Ultimo)' };
+  meta.innerHTML = '<strong>Dienst '+shift+' — '+shiftNames[shift]+'</strong> &nbsp;|&nbsp; '+friendlyDate(srViewing);
+  if (b64) {
+    const blob = b64ToBlob(b64, 'application/pdf');
+    const url = URL.createObjectURL(blob);
+    iframe.src = url;
+    iframe.style.display = 'block';
+    noReport.style.display = 'none';
+  } else {
+    iframe.style.display = 'none';
+    iframe.src = '';
+    noReport.style.display = 'flex';
+    document.getElementById('sri-no-msg').textContent = 'Geen rapport voor Dienst '+shift+' op '+friendlyDate(srViewing);
+  }
+}
+
+function srShowShift(shift) {
+  const b64 = srLoadPDF(srViewing, shift);
+  const iframe = document.getElementById('sr-iframe');
+  const noReport = document.getElementById('sr-no-report');
+  const meta = document.getElementById('sr-pdf-meta');
+  const downloadBtn = document.getElementById('sr-download-btn');
+  const uploadLabel = document.getElementById('sr-upload-label');
+  const shiftNames = { A:'Dagdienst (07-15)', B:'Avonddienst (15-23)', C:'Nachtdienst (23-07)', T:'Technisch rapport (Ultimo)' };
+
+  if (b64) {
+    const blob = b64ToBlob(b64, 'application/pdf');
+    const url = URL.createObjectURL(blob);
+    iframe.src = url;
+    iframe.style.display = 'block';
+    noReport.style.display = 'none';
+    meta.innerHTML = `<strong>Dienst ${shift} — ${shiftNames[shift]}</strong> &nbsp;|&nbsp; ${friendlyDate(srViewing)}`;
+    downloadBtn.style.display = 'flex';
+    uploadLabel.style.display = 'flex';
+  } else {
+    iframe.style.display = 'none';
+    iframe.src = '';
+    noReport.style.display = 'flex';
+    noReport.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="currentColor" style="width:48px;height:48px;opacity:.3;"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM8 16h8v1.5H8zm0-3h8v1.5H8zm0-3h5v1.5H8z"/></svg>
+      <div style="font-size:14px;font-weight:600;">Geen rapport voor Dienst ${shift}</div>
+      <div style="font-size:12px;">${friendlyDate(srViewing)} — ${shiftNames[shift]}</div>
+      <label class="sr-upload-btn" style="margin-top:8px;">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:13px;height:13px;"><path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/></svg>
+        Upload shiftrapport PDF
+        <input type="file" accept=".pdf" style="display:none;" onchange="srUploadPDF(this)">
+      </label>
+    `;
+    meta.innerHTML = `Dienst ${shift} — ${friendlyDate(srViewing)} — <span style="color:var(--muted2)">geen rapport</span>`;
+    downloadBtn.style.display = 'none';
+    uploadLabel.style.display = 'flex';
+  }
+}
+
+function srUploadPDF(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const shift = srCurrentShift || 'A';
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const b64 = e.target.result.split(',')[1];
+    srSavePDF(srViewing, shift, b64);
+    srUpdateButtons();
+    srShowShift(shift);
+    showToast('Rapport opgeslagen: Dienst ' + shift + ' — ' + friendlyDate(srViewing));
+  };
+  reader.readAsDataURL(file);
+}
+
+function srDownloadPDF() {
+  const b64 = srLoadPDF(srViewing, srCurrentShift);
+  if (!b64) return;
+  const blob = b64ToBlob(b64, 'application/pdf');
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `Shiftrapport_${srViewing}_Dienst${srCurrentShift}.pdf`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function b64ToBlob(b64, type) {
+  const bytes = atob(b64);
+  const arr = new Uint8Array(bytes.length);
+  for (let i = 0; i < bytes.length; i++) arr[i] = bytes.charCodeAt(i);
+  return new Blob([arr], { type });
+}
+
+
+// ══ WERKVERGUNNING ════════════════════════════════════════════════
+const WV_TYPES = {
+  hot: {label:'Heet werk', cls:'wv-type-hot'},
+  cold: {label:'Koud werk', cls:'wv-type-cold'},
+  elec: {label:'Elektrisch', cls:'wv-type-elec'},
+  confined: {label:'Besloten ruimte', cls:'wv-type-confined'},
+  height: {label:'Hoog werken', cls:'wv-type-height'},
+  general: {label:'Algemeen', cls:'wv-type-general'},
+};
+const WV_STATUS = {
+  open: {label:'Open', cls:'wv-status-badge-open', dot:'wv-status-open', icon:'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'},
+  active: {label:'Actief', cls:'wv-status-badge-active', dot:'wv-status-active', icon:'M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'},
+  expired: {label:'Verlopen', cls:'wv-status-badge-expired', dot:'wv-status-expired', icon:'M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'},
+  closed: {label:'Afgesloten', cls:'wv-status-badge-closed', dot:'wv-status-closed', icon:'M18 7l-1.41-1.41-6.34 6.34 1.41 1.41L18 7zm4.24-1.41L11.66 16.17 7.48 12l-1.41 1.41L11.66 19l12-12-1.42-1.41zM.41 13.41L6 19l1.41-1.41L1.83 12 .41 13.41z'},
+};
+
+// Demo data — realistic werkvergunningen
+const WV_DEMO = [
+  {id:1, nr:'WV-2026-001', omschrijving:'Lassen aan Brug 4 — kabelgoot reparatie', type:'hot', status:'closed',
+   locatie:'Brug 4 — Vlothaven', uitvoerder:'Guido van Liere', opdrachtgever:'Technisch beheer',
+   startDatum:'2026-04-14', eindDatum:'2026-04-14', startTijd:'08:00', eindTijd:'12:00',
+   risicos:{vuur:true, gas:false, elektrisch:false, hoogte:false, besloten:false, chemisch:false},
+   pbms:['Lassen masker','Vuurvaste kleding','Handschoenen','Veiligheidsschoenen'],
+   bijzonderheden:'Brandblusser aanwezig. Brandwacht aangesteld. Hete werkzaamheden toestemming vereist.',
+   uitgever:{naam:'Fred Mulder', getekend:true, tijd:'07:55'},
+   uitvoerderSign:{naam:'Guido van Liere', getekend:true, tijd:'08:01'},
+   ultId:'50854'},
+  {id:2, nr:'WV-2026-002', omschrijving:'Besloten ruimte betreden — Toren 1 magneetband inspectie', type:'confined', status:'closed',
+   locatie:'Toren 1 — Westhaven', uitvoerder:'Fred Mulder', opdrachtgever:'OE Lead',
+   startDatum:'2026-04-14', eindDatum:'2026-04-14', startTijd:'15:00', eindTijd:'17:00',
+   risicos:{vuur:false, gas:true, elektrisch:false, hoogte:false, besloten:true, chemisch:false},
+   pbms:['PiD-meter','Filterbus MSA AX','Harnasgordel','Communicatiemiddel'],
+   bijzonderheden:'PiD-meting vereist voor betreden. Min. 2 personen aanwezig. Reddingsplan gereed.',
+   uitgever:{naam:'Ploegleider B', getekend:true, tijd:'14:45'},
+   uitvoerderSign:{naam:'Fred Mulder', getekend:true, tijd:'15:02'},
+   ultId:'50851'},
+  {id:3, nr:'WV-2026-003', omschrijving:'Elektrisch werk — Nijlpaard Ultracaps vervanging', type:'elec', status:'active',
+   locatie:'Nijlpaard — Vlothaven', uitvoerder:'Marco Snel', opdrachtgever:'M&R afdeling',
+   startDatum:'2026-04-15', eindDatum:'2026-04-15', startTijd:'07:00', eindTijd:'15:00',
+   risicos:{vuur:false, gas:false, elektrisch:true, hoogte:false, besloten:false, chemisch:false},
+   pbms:['Isolerende handschoenen kl.2','Veiligheidsbril','Veiligheidsschoenen','Spanningzoeker'],
+   bijzonderheden:'Installatie spanningsloos maken voor aanvang. E-stop vergrendeld. LOTO procedure toepassen.',
+   uitgever:{naam:'Ploegleider C', getekend:true, tijd:'06:55'},
+   uitvoerderSign:{naam:'Marco Snel', getekend:false, tijd:''},
+   ultId:'50855'},
+  {id:4, nr:'WV-2026-004', omschrijving:'Hoog werken — Reinigen dakgoten loods 7', type:'height', status:'open',
+   locatie:'Loods 7 — Westhaven', uitvoerder:'Aannemer Swinstad', opdrachtgever:'Technisch beheer',
+   startDatum:'2026-04-16', eindDatum:'2026-04-16', startTijd:'09:00', eindTijd:'16:00',
+   risicos:{vuur:false, gas:false, elektrisch:false, hoogte:true, besloten:false, chemisch:false},
+   pbms:['Harnasgordel','Valbeveiliging','Helm','Veiligheidsschoenen','Veiligheidslijn'],
+   bijzonderheden:'Werkplatform gecontroleerd. Wind max. Bft 5. Val arrest systeem verplicht.',
+   uitgever:{naam:'', getekend:false, tijd:''},
+   uitvoerderSign:{naam:'Aannemer Swinstad', getekend:false, tijd:''},
+   ultId:''},
+  {id:5, nr:'WV-2026-005', omschrijving:'Kade schoonmaken — hogedrukreiniger Westhaven', type:'general', status:'active',
+   locatie:'Kade Westhaven', uitvoerder:'Operator dienst B', opdrachtgever:'Ploegleider B',
+   startDatum:'2026-04-14', eindDatum:'2026-04-14', startTijd:'14:00', eindTijd:'18:00',
+   risicos:{vuur:false, gas:false, elektrisch:false, hoogte:false, besloten:false, chemisch:true},
+   pbms:['Veiligheidsbril','Waterbestendige handschoenen','Veiligheidsschoenen','Beschermende kleding'],
+   bijzonderheden:'Afvoerputten controleren. Afvalwater opvangen. Geen reinigingsmiddelen in haven lozen.',
+   uitgever:{naam:'Ploegleider B', getekend:true, tijd:'13:55'},
+   uitvoerderSign:{naam:'Operator dienst B', getekend:true, tijd:'14:02'},
+   ultId:''},
+  {id:6, nr:'WV-2026-006', omschrijving:'Staalslakken verkassen — kraan 2 inzet', type:'general', status:'expired',
+   locatie:'Middenvak ACP — Westhaven', uitvoerder:'Kranist dienst A', opdrachtgever:'Ploegleider A',
+   startDatum:'2026-04-13', eindDatum:'2026-04-13', startTijd:'08:00', eindTijd:'14:00',
+   risicos:{vuur:false, gas:false, elektrisch:false, hoogte:false, besloten:false, chemisch:false},
+   pbms:['Helm','Veiligheidsschoenen','Veiligheidshesje','Handschoenen'],
+   bijzonderheden:'Kraan 2 pre-check uitgevoerd. Max belasting 50 ton. Zonering instellen 20m.',
+   uitgever:{naam:'Ploegleider A', getekend:true, tijd:'07:50'},
+   uitvoerderSign:{naam:'Kranist dienst A', getekend:true, tijd:'08:05'},
+   ultId:''},
+];
+
+let wvCurrentFilter = 'all';
+let wvCurrentId = null;
+
+function wvLoadData() {
+  try {
+    const stored = localStorage.getItem('wv:data');
+    return stored ? JSON.parse(stored) : WV_DEMO;
+  } catch(e) { return WV_DEMO; }
+}
+function wvSaveData(data) {
+  try { localStorage.setItem('wv:data', JSON.stringify(data)); } catch(e) {}
+}
+
+function wvFilter(f) {
+  wvCurrentFilter = f;
+  ['all','active','open','expired','closed'].forEach(id => {
+    const b = document.getElementById('wvf-'+id);
+    if (b) b.classList.toggle('on', id === f);
+  });
+  wvRender();
+}
+
+function wvRender() {
+  const data = wvLoadData();
+  const filtered = wvCurrentFilter === 'all' ? data : data.filter(w => w.status === wvCurrentFilter);
+
+  // Stats
+  const stats = [
+    {val: data.filter(w=>w.status==='active').length, label:'Actieve vergunningen', color:'var(--green)'},
+    {val: data.filter(w=>w.status==='open').length, label:'Wachten op handtekening', color:'var(--blue)'},
+    {val: data.filter(w=>w.status==='expired').length, label:'Verlopen', color:'var(--red)'},
+    {val: data.length, label:'Totaal deze week', color:'var(--muted2)'},
+  ];
+  document.getElementById('wv-stats').innerHTML = stats.map(s =>
+    `<div class="wv-stat"><div class="wv-stat-val" style="color:${s.color};">${s.val}</div><div class="wv-stat-label">${s.label}</div></div>`
+  ).join('');
+
+  // Grid
+  const grid = document.getElementById('wv-grid');
+  if (!filtered.length) {
+    grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted2);">Geen werkvergunningen gevonden</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(w => {
+    const st = WV_STATUS[w.status];
+    const tp = WV_TYPES[w.type];
+    const signed = w.uitgever.getekend && w.uitvoerderSign.getekend;
+    return `<div class="wv-card" onclick="wvShowDetail(${w.id})">
+      <div class="wv-status-dot ${st.dot}">
+        <svg viewBox="0 0 24 24" fill="${w.status==='active'?'#2ecc71':w.status==='expired'?'#e74c3c':w.status==='closed'?'#5a7a99':'#3498db'}"><path d="${st.icon}"/></svg>
+      </div>
+      <div class="wv-info">
+        <div class="wv-name">${escHtml(w.omschrijving)}</div>
+        <div class="wv-meta">
+          <span>${w.nr}</span>
+          <span>&#x1F4CD; ${escHtml(w.locatie)}</span>
+          <span>&#x1F464; ${escHtml(w.uitvoerder)}</span>
+          <span>&#x1F4C5; ${w.startDatum} ${w.startTijd}–${w.eindTijd}</span>
+          ${w.ultId?`<span style="color:var(--blue);">Ult-ID: ${w.ultId}</span>`:''}
+        </div>
+      </div>
+      <div class="wv-badges">
+        <span class="wv-badge ${tp.cls}">${tp.label}</span>
+        <span class="wv-badge ${st.cls}">${st.label}</span>
+        ${signed?'<span class="wv-badge" style="background:rgba(46,204,113,.12);color:var(--green);">&#x2713; Getekend</span>':
+          w.status==='open'?'<span class="wv-badge" style="background:rgba(245,197,66,.12);color:var(--yellow);">&#x270F; Handtekening vereist</span>':''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function wvShowDetail(id) {
+  const data = wvLoadData();
+  const w = data.find(x => x.id === id);
+  if (!w) return;
+  wvCurrentId = id;
+  const st = WV_STATUS[w.status];
+  const tp = WV_TYPES[w.type];
+
+  document.getElementById('wvd-title').textContent = w.nr + ' — ' + w.omschrijving;
+  document.getElementById('wvd-meta').innerHTML =
+    `<span class="wv-badge ${tp.cls}">${tp.label}</span> &nbsp;
+     <span class="wv-badge ${st.cls}">${st.label}</span>
+     ${w.ultId?` &nbsp; <span style="color:var(--blue);font-size:11px;">Ultimo ID: ${w.ultId}</span>`:''}`;
+
+  const risicos = [
+    {key:'vuur',label:'&#x1F525; Heet werk'},
+    {key:'gas',label:'&#x1F4A8; Gasgevaar'},
+    {key:'elektrisch',label:'&#x26A1; Elektrisch'},
+    {key:'hoogte',label:'&#x1FAA4; Hoog werken'},
+    {key:'besloten',label:'&#x1F512; Besloten ruimte'},
+    {key:'chemisch',label:'&#x2697;&#xFE0F; Chemisch'},
+  ];
+
+  document.getElementById('wvd-body').innerHTML = `
+    <div class="wv-section">
+      <div class="wv-section-title">Algemene gegevens</div>
+      <div class="wv-field-grid">
+        <div class="wv-field"><div class="wv-field-label">Locatie</div><div class="wv-field-value">${escHtml(w.locatie)}</div></div>
+        <div class="wv-field"><div class="wv-field-label">Uitvoerder</div><div class="wv-field-value">${escHtml(w.uitvoerder)}</div></div>
+        <div class="wv-field"><div class="wv-field-label">Opdrachtgever</div><div class="wv-field-value">${escHtml(w.opdrachtgever)}</div></div>
+        <div class="wv-field"><div class="wv-field-label">Geldigheid</div><div class="wv-field-value">${w.startDatum} ${w.startTijd} &mdash; ${w.eindTijd}</div></div>
+      </div>
+    </div>
+    <div class="wv-section">
+      <div class="wv-section-title">Risico-identificatie</div>
+      <div class="wv-risk-grid">
+        ${risicos.map(r=>`<div class="wv-risk-item ${w.risicos[r.key]?'active':''}">
+          <span>${r.label}</span>
+          ${w.risicos[r.key]?'<span style="margin-left:auto;color:#e74c3c;font-weight:700;">&#x26A0;</span>':''}
+        </div>`).join('')}
+      </div>
+    </div>
+    <div class="wv-section">
+      <div class="wv-section-title">Vereiste PBMs</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+        ${w.pbms.map(p=>`<span style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:11px;">${escHtml(p)}</span>`).join('')}
+      </div>
+    </div>
+    <div class="wv-section">
+      <div class="wv-section-title">Bijzondere maatregelen</div>
+      <div style="background:var(--surface2);border-radius:8px;padding:10px 12px;font-size:12px;line-height:1.6;">${escHtml(w.bijzonderheden)}</div>
+    </div>
+    <div class="wv-section">
+      <div class="wv-section-title">Handtekeningen</div>
+      <div class="wv-sign-row">
+        <div class="wv-sign-box">
+          <div class="wv-sign-name">${escHtml(w.uitgever.naam||'—')}</div>
+          <div class="wv-sign-role">Uitgever / Ploegleider</div>
+          ${w.uitgever.getekend
+            ?`<div class="wv-sign-status wv-signed">&#x2713; Getekend ${w.uitgever.tijd}</div>`
+            :`<div class="wv-sign-status wv-unsigned">Handtekening vereist</div>`}
+        </div>
+        <div class="wv-sign-box">
+          <div class="wv-sign-name">${escHtml(w.uitvoerderSign.naam||'—')}</div>
+          <div class="wv-sign-role">Uitvoerder</div>
+          ${w.uitvoerderSign.getekend
+            ?`<div class="wv-sign-status wv-signed">&#x2713; Getekend ${w.uitvoerderSign.tijd}</div>`
+            :`<div class="wv-sign-status wv-unsigned">Handtekening vereist</div>`}
+        </div>
+      </div>
+    </div>
+    ${w.status==='open'?`
+    <div style="background:rgba(230,126,34,.08);border:1px solid rgba(230,126,34,.25);border-radius:8px;padding:10px 14px;font-size:12px;color:#e67e22;margin-top:4px;">
+      <strong>&#x1F4A1; Fase 6 (nov 2026):</strong> Handtekeningen worden digitaal gezet via touchscreen of e-mail bevestiging. Nu nog papieren handtekening vereist op uitgeprint exemplaar.
+    </div>`:''}
+  `;
+
+  document.getElementById('wv-overlay').classList.add('open');
+}
+
+function wvCloseDetail() {
+  document.getElementById('wv-overlay').classList.remove('open');
+}
+
+function wvOpenNew() {
+  showToast('&#x1F6E1;&#xFE0F; Nieuwe vergunning aanmaken komt in Fase 6 (nov 2026)');
+}
+
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
 
 // ══ THEME TOGGLE ══════════════════════════════════════
@@ -1608,6 +2333,7 @@ function initTheme(){
 initTheme();
 filterView('all');
 setViewing(todayStr());
+setTimeout(()=>srSetViewing(todayStr()),100);
 setTimeout(()=>{
   const all=getAllActions();const badge=document.getElementById('action-count-badge');
   if(badge&&all.length>0){badge.textContent=all.length;badge.style.display='inline-block';}
