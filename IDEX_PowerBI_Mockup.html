@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDEX Analytics — Power BI Dashboard Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #f0f4f8;
+  --surface: #ffffff;
+  --surface2: #e8edf3;
+  --navy: #1a2e45;
+  --navy2: #213549;
+  --hes: #e8401c;
+  --green: #1a9e50;
+  --yellow: #c49a00;
+  --orange: #c45e00;
+  --blue: #1a6fba;
+  --border: rgba(0,0,0,.08);
+  --text: #1a2e45;
+  --muted: #7a90a8;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font-family: "DM Sans", sans-serif; min-height: 100vh; }
+
+/* TOPBAR */
+.topbar { height: 5px; background: linear-gradient(90deg, #e8401c, #ff6535); }
+
+/* HEADER */
+.header {
+  background: var(--navy);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header-logo { display: flex; align-items: center; gap: 12px; }
+.header-logo .logo-box {
+  background: var(--hes);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-family: "Syne", sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  color: #fff;
+  letter-spacing: .5px;
+}
+.header-logo h1 { font-family: "Syne", sans-serif; font-weight: 700; font-size: 16px; color: #fff; }
+.header-logo p { font-size: 11px; color: rgba(255,255,255,.5); margin-top: 1px; }
+.header-right { display: flex; gap: 8px; align-items: center; }
+.header-badge {
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 11px;
+  color: rgba(255,255,255,.7);
+}
+.header-badge.live { background: rgba(26,158,80,.2); border-color: rgba(26,158,80,.4); color: #4cd080; }
+.live-dot { width: 6px; height: 6px; border-radius: 50%; background: #4cd080; display: inline-block; margin-right: 5px; box-shadow: 0 0 6px #4cd080; }
+
+/* FILTER BAR */
+.filter-bar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 24px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.filter-label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-right: 4px; }
+.filter-btn {
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .15s;
+  font-family: "DM Sans", sans-serif;
+}
+.filter-btn:hover { background: #d8e0ea; color: var(--text); }
+.filter-btn.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+.filter-sep { width: 1px; height: 20px; background: var(--border); }
+
+/* MAIN LAYOUT */
+.main { padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+
+/* KPI ROW */
+.kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.kpi-card {
+  background: var(--surface);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,.05);
+}
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.kpi-card.safety::before  { background: var(--green); }
+.kpi-card.quality::before { background: var(--blue); }
+.kpi-card.delivery::before{ background: var(--yellow); }
+.kpi-card.cost::before    { background: var(--hes); }
+.kpi-label { font-size: 10px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); }
+.kpi-label.safety  { color: var(--green); }
+.kpi-label.quality { color: var(--blue); }
+.kpi-label.delivery{ color: var(--yellow); }
+.kpi-label.cost    { color: var(--hes); }
+.kpi-value { font-family: "Syne", sans-serif; font-size: 32px; font-weight: 800; line-height: 1; color: var(--text); }
+.kpi-sub { font-size: 11px; color: var(--muted); }
+.kpi-trend { display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; margin-top: 2px; }
+.kpi-trend.up { color: var(--green); }
+.kpi-trend.down { color: var(--hes); }
+.kpi-trend.neutral { color: var(--muted); }
+
+/* CHART ROW */
+.chart-row { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; }
+.chart-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.chart-card {
+  background: var(--surface);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 16px 18px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.05);
+}
+.chart-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.chart-title { font-family: "Syne", sans-serif; font-weight: 700; font-size: 13px; color: var(--text); }
+.chart-subtitle { font-size: 10px; color: var(--muted); margin-top: 2px; }
+.chart-badge {
+  font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600;
+}
+.chart-badge.green { background: rgba(26,158,80,.12); color: var(--green); }
+.chart-badge.red { background: rgba(232,64,28,.12); color: var(--hes); }
+.chart-badge.blue { background: rgba(26,111,186,.12); color: var(--blue); }
+.chart-badge.yellow { background: rgba(196,154,0,.12); color: var(--yellow); }
+canvas { max-height: 200px; }
+
+/* TOP ISSUES TABLE */
+.issues-table { width: 100%; border-collapse: collapse; }
+.issues-table th {
+  font-size: 9px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase;
+  color: var(--muted); text-align: left; padding: 6px 8px; border-bottom: 2px solid var(--border2);
+}
+.issues-table td {
+  font-size: 12px; padding: 8px 8px; border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+.issues-table tr:last-child td { border-bottom: none; }
+.issues-table tr:hover td { background: #f5f8fc; }
+.rank-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; border-radius: 4px;
+  font-size: 10px; font-weight: 700;
+}
+.rank-1 { background: rgba(232,64,28,.15); color: var(--hes); }
+.rank-2 { background: rgba(196,94,0,.12); color: var(--orange); }
+.rank-3 { background: rgba(196,154,0,.12); color: var(--yellow); }
+.rank-n { background: var(--surface2); color: var(--muted); }
+.cat-dot {
+  width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 5px;
+}
+.freq-bar-bg { background: var(--surface2); border-radius: 3px; height: 6px; width: 80px; overflow: hidden; display: inline-block; vertical-align: middle; }
+.freq-bar { height: 6px; border-radius: 3px; }
+
+/* ACTIONS TABLE */
+.action-tbl { width: 100%; border-collapse: collapse; }
+.action-tbl th { font-size: 9px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); text-align: left; padding: 5px 8px; border-bottom: 2px solid var(--border); }
+.action-tbl td { font-size: 11px; padding: 7px 8px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.action-tbl tr:last-child td { border-bottom: none; }
+.prio { display: inline-block; padding: 1px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; }
+.p1 { background: rgba(232,64,28,.15); color: var(--hes); }
+.p2 { background: rgba(196,94,0,.12); color: var(--orange); }
+.p3 { background: rgba(196,154,0,.12); color: var(--yellow); }
+.p4 { background: rgba(26,158,80,.12); color: var(--green); }
+.days-overdue { color: var(--hes); font-weight: 600; font-size: 11px; }
+.days-ok { color: var(--green); font-weight: 600; font-size: 11px; }
+.days-warn { color: var(--yellow); font-weight: 600; font-size: 11px; }
+
+/* MOCKUP WATERMARK */
+.mockup-banner {
+  background: rgba(26,111,186,.08);
+  border: 1px solid rgba(26,111,186,.2);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 12px;
+  color: var(--blue);
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+/* RESPONSIVE */
+@media(max-width: 900px) {
+  .kpi-row { grid-template-columns: repeat(2, 1fr); }
+  .chart-row { grid-template-columns: 1fr; }
+  .chart-row-3 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-logo">
+    <div class="logo-box">HES</div>
+    <div>
+      <h1>IDEX Analytics</h1>
+      <p>Operational Intelligence Dashboard — Power BI</p>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="header-badge"><span class="live-dot"></span>Live data via SharePoint</div>
+    <div class="header-badge">Q2 2026</div>
+    <div class="header-badge">Terminal Rotterdam</div>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <span class="filter-label">Periode:</span>
+  <button class="filter-btn">7 dagen</button>
+  <button class="filter-btn active">30 dagen</button>
+  <button class="filter-btn">Kwartaal</button>
+  <button class="filter-btn">Jaar</button>
+  <div class="filter-sep"></div>
+  <span class="filter-label">Categorie:</span>
+  <button class="filter-btn active" style="border-color:rgba(26,158,80,.4);color:var(--green);background:rgba(26,158,80,.08)">Safety</button>
+  <button class="filter-btn active" style="border-color:rgba(26,111,186,.4);color:var(--blue);background:rgba(26,111,186,.08)">Quality</button>
+  <button class="filter-btn active" style="border-color:rgba(196,154,0,.4);color:var(--yellow);background:rgba(196,154,0,.08)">Delivery</button>
+  <button class="filter-btn active" style="border-color:rgba(232,64,28,.4);color:var(--hes);background:rgba(232,64,28,.08)">Cost</button>
+  <div class="filter-sep"></div>
+  <span class="filter-label">Dienst:</span>
+  <button class="filter-btn active">Alle</button>
+  <button class="filter-btn">A (06-14)</button>
+  <button class="filter-btn">B (14-22)</button>
+  <button class="filter-btn">C (22-06)</button>
+</div>
+
+<div class="main">
+
+  <!-- MOCKUP BANNER -->
+  <div class="mockup-banner">
+    📊 <strong>Dashboard Mockup</strong> — Dit is een voorbeeld van hoe Power BI eruit zal zien na koppeling met SharePoint IDEX_Data. Gegevens zijn illustratief.
+  </div>
+
+  <!-- KPI ROW -->
+  <div class="kpi-row">
+    <div class="kpi-card safety">
+      <div class="kpi-label safety">Safety</div>
+      <div class="kpi-value">94%</div>
+      <div class="kpi-sub">Veilige dagen (afgelopen 30d)</div>
+      <div class="kpi-trend up">▲ +3% vs vorige maand</div>
+    </div>
+    <div class="kpi-card quality">
+      <div class="kpi-label quality">Quality</div>
+      <div class="kpi-value">7</div>
+      <div class="kpi-sub">OMS meldingen deze maand</div>
+      <div class="kpi-trend down">▼ -2 vs vorige maand</div>
+    </div>
+    <div class="kpi-card delivery">
+      <div class="kpi-label delivery">Delivery</div>
+      <div class="kpi-value">87%</div>
+      <div class="kpi-sub">Gemiddelde realisatie</div>
+      <div class="kpi-trend neutral">→ gelijk aan vorige maand</div>
+    </div>
+    <div class="kpi-card cost">
+      <div class="kpi-label cost">Cost</div>
+      <div class="kpi-value">12</div>
+      <div class="kpi-sub">Open acties P1+P2</div>
+      <div class="kpi-trend down">▼ -5 vs vorige maand</div>
+    </div>
+  </div>
+
+  <!-- CHART ROW 1 -->
+  <div class="chart-row">
+    <!-- Trend line chart -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">SQDC Trend — Afgelopen 12 weken</div>
+          <div class="chart-subtitle">Veilige dagen % · OMS meldingen · Realisatie %</div>
+        </div>
+        <span class="chart-badge blue">Wekelijks</span>
+      </div>
+      <canvas id="trendChart"></canvas>
+    </div>
+    <!-- Donut -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Acties per Categorie</div>
+          <div class="chart-subtitle">Open acties verdeling</div>
+        </div>
+        <span class="chart-badge red">38 open</span>
+      </div>
+      <canvas id="donutChart"></canvas>
+      <div style="display:flex;gap:12px;margin-top:10px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)"><div style="width:10px;height:10px;border-radius:2px;background:#1a9e50;"></div>Safety (8)</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)"><div style="width:10px;height:10px;border-radius:2px;background:#1a6fba;"></div>Quality (11)</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)"><div style="width:10px;height:10px;border-radius:2px;background:#c49a00;"></div>Delivery (12)</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)"><div style="width:10px;height:10px;border-radius:2px;background:#e8401c;"></div>Cost (7)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHART ROW 2 -->
+  <div class="chart-row-3">
+    <!-- Top oorzaken -->
+    <div class="chart-card" style="grid-column: span 1;">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Top Oorzaken — Safety</div>
+          <div class="chart-subtitle">Meest gemelde problemen</div>
+        </div>
+        <span class="chart-badge green">30 dagen</span>
+      </div>
+      <table class="issues-table">
+        <thead><tr><th>#</th><th>Oorzaak</th><th>Freq.</th></tr></thead>
+        <tbody>
+          <tr><td><span class="rank-badge rank-1">1</span></td><td>Elektrakasten niet gesloten</td><td><div class="freq-bar-bg"><div class="freq-bar" style="width:90%;background:#1a9e50;"></div></div> <span style="font-size:11px;color:var(--muted)">9x</span></td></tr>
+          <tr><td><span class="rank-badge rank-2">2</span></td><td>PBM niet gedragen</td><td><div class="freq-bar-bg"><div class="freq-bar" style="width:60%;background:#c45e00;"></div></div> <span style="font-size:11px;color:var(--muted)">6x</span></td></tr>
+          <tr><td><span class="rank-badge rank-3">3</span></td><td>Toegang tankput zonder meter</td><td><div class="freq-bar-bg"><div class="freq-bar" style="width:40%;background:#c49a00;"></div></div> <span style="font-size:11px;color:var(--muted)">4x</span></td></tr>
+          <tr><td><span class="rank-badge rank-n">4</span></td><td>Weg niet afgesloten</td><td><div class="freq-bar-bg"><div class="freq-bar" style="width:20%;background:#7a90a8;"></div></div> <span style="font-size:11px;color:var(--muted)">2x</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Top delivery problemen -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Storingen per Installatie</div>
+          <div class="chart-subtitle">Delivery — stoptijd oorzaken</div>
+        </div>
+        <span class="chart-badge yellow">30 dagen</span>
+      </div>
+      <canvas id="barChart"></canvas>
+    </div>
+
+    <!-- Dienst vergelijking -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Meldingen per Dienst</div>
+          <div class="chart-subtitle">Verdeling A / B / C</div>
+        </div>
+        <span class="chart-badge blue">Dagorder</span>
+      </div>
+      <canvas id="dienstChart"></canvas>
+      <div style="display:flex;gap:12px;margin-top:10px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)"><div style="width:10px;height:10px;border-radius:2px;background:#1a6fba;"></div>Dienst A</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)"><div style="width:10px;height:10px;border-radius:2px;background:#c49a00;"></div>Dienst B</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)"><div style="width:10px;height:10px;border-radius:2px;background:#1a9e50;"></div>Dienst C</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM ROW -->
+  <div class="chart-row">
+    <!-- Open acties table -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Open Acties — Prioriteit overzicht</div>
+          <div class="chart-subtitle">Gesorteerd op prioriteit en deadline</div>
+        </div>
+        <span class="chart-badge red">12 P1+P2</span>
+      </div>
+      <table class="action-tbl">
+        <thead><tr><th>Prio</th><th>Categorie</th><th>Actie</th><th>Wie</th><th>Deadline</th><th>Dagen</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="prio p1">P1</span></td>
+            <td><span style="color:var(--hes);font-size:11px;font-weight:600;">Cost</span></td>
+            <td style="font-weight:500;">Claim M.V Riia afhandelen</td>
+            <td style="color:var(--muted);">Dick</td>
+            <td style="color:var(--muted);font-size:11px;">18 apr</td>
+            <td><span class="days-warn">2d</span></td>
+          </tr>
+          <tr>
+            <td><span class="prio p1">P1</span></td>
+            <td><span style="color:var(--green);font-size:11px;font-weight:600;">Safety</span></td>
+            <td style="font-weight:500;">Elektrakasten procedure updaten</td>
+            <td style="color:var(--muted);">Willem</td>
+            <td style="color:var(--muted);font-size:11px;">15 apr</td>
+            <td><span class="days-overdue">3d verlopen</span></td>
+          </tr>
+          <tr>
+            <td><span class="prio p2">P2</span></td>
+            <td><span style="color:var(--yellow);font-size:11px;font-weight:600;">Delivery</span></td>
+            <td style="font-weight:500;">Kraan 2 losklep reparatie</td>
+            <td style="color:var(--muted);">Lowie</td>
+            <td style="color:var(--muted);font-size:11px;">22 apr</td>
+            <td><span class="days-ok">6d</span></td>
+          </tr>
+          <tr>
+            <td><span class="prio p2">P2</span></td>
+            <td><span style="color:var(--blue);font-size:11px;font-weight:600;">Quality</span></td>
+            <td style="font-weight:500;">OMS melding vochtprobleem loods 7</td>
+            <td style="color:var(--muted);">Rudolph</td>
+            <td style="color:var(--muted);font-size:11px;">30 apr</td>
+            <td><span class="days-ok">14d</span></td>
+          </tr>
+          <tr>
+            <td><span class="prio p2">P2</span></td>
+            <td><span style="color:var(--yellow);font-size:11px;font-weight:600;">Delivery</span></td>
+            <td style="font-weight:500;">Pomp westhaven opvolging</td>
+            <td style="color:var(--muted);">Lowie</td>
+            <td style="color:var(--muted);font-size:11px;">25 apr</td>
+            <td><span class="days-ok">9d</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Heatmap-style weekoverzicht -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Maandkalender — SQDC Status</div>
+          <div class="chart-subtitle">Groene / gele / rode dagen april 2026</div>
+        </div>
+        <span class="chart-badge green">April 2026</span>
+      </div>
+      <div id="heatmap" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:4px;"></div>
+      <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)"><div style="width:10px;height:10px;border-radius:2px;background:#1a9e50;"></div>Groen — geen problemen</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)"><div style="width:10px;height:10px;border-radius:2px;background:#c49a00;"></div>Geel — 1-2 meldingen</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)"><div style="width:10px;height:10px;border-radius:2px;background:#c0392b;"></div>Rood — meerdere issues</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── TREND CHART ────────────────────────────────────────────
+const trendCtx = document.getElementById('trendChart').getContext('2d');
+new Chart(trendCtx, {
+  type: 'line',
+  data: {
+    labels: ['Wk 1','Wk 2','Wk 3','Wk 4','Wk 5','Wk 6','Wk 7','Wk 8','Wk 9','Wk 10','Wk 11','Wk 12'],
+    datasets: [
+      {
+        label: 'Veilige dagen %',
+        data: [88,90,92,89,94,91,96,94,92,95,97,94],
+        borderColor: '#1a9e50', backgroundColor: 'rgba(26,158,80,.08)',
+        tension: 0.4, fill: true, pointRadius: 3, borderWidth: 2
+      },
+      {
+        label: 'Realisatie %',
+        data: [82,85,80,88,86,84,87,89,85,88,90,87],
+        borderColor: '#c49a00', backgroundColor: 'transparent',
+        tension: 0.4, fill: false, pointRadius: 3, borderWidth: 2, borderDash: [4,3]
+      },
+      {
+        label: 'OMS meldingen',
+        data: [3,2,4,1,2,3,1,2,2,1,0,2],
+        borderColor: '#1a6fba', backgroundColor: 'transparent',
+        tension: 0.4, fill: false, pointRadius: 3, borderWidth: 2, yAxisID: 'y2'
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: true,
+    plugins: { legend: { display: true, position: 'bottom', labels: { font: { family: 'DM Sans', size: 10 }, color: '#7a90a8', boxWidth: 10, padding: 12 } } },
+    scales: {
+      y: { min: 70, max: 100, grid: { color: 'rgba(0,0,0,.05)' }, ticks: { font: { size: 10 }, color: '#7a90a8', callback: v => v+'%' } },
+      y2: { position: 'right', min: 0, max: 8, grid: { display: false }, ticks: { font: { size: 10 }, color: '#1a6fba' } },
+      x: { grid: { display: false }, ticks: { font: { size: 10 }, color: '#7a90a8' } }
+    }
+  }
+});
+
+// ── DONUT CHART ────────────────────────────────────────────
+const donutCtx = document.getElementById('donutChart').getContext('2d');
+new Chart(donutCtx, {
+  type: 'doughnut',
+  data: {
+    labels: ['Safety','Quality','Delivery','Cost'],
+    datasets: [{ data: [8,11,12,7], backgroundColor: ['#1a9e50','#1a6fba','#c49a00','#e8401c'], borderWidth: 0, hoverOffset: 4 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: true, cutout: '65%',
+    plugins: { legend: { display: false } }
+  }
+});
+
+// ── BAR CHART ──────────────────────────────────────────────
+const barCtx = document.getElementById('barChart').getContext('2d');
+new Chart(barCtx, {
+  type: 'bar',
+  data: {
+    labels: ['Kraan 2','Kraan 5','Toren 1','Brug 3','Brug 4','Pomp 11'],
+    datasets: [{
+      label: 'Storingen (aantal)',
+      data: [8, 5, 4, 3, 2, 2],
+      backgroundColor: ['#e8401c','#c45e00','#c49a00','#c49a00','#1a9e50','#1a9e50'],
+      borderRadius: 4, borderWidth: 0
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: true, indexAxis: 'y',
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: 'rgba(0,0,0,.05)' }, ticks: { font: { size: 10 }, color: '#7a90a8' } },
+      y: { grid: { display: false }, ticks: { font: { size: 10 }, color: '#1a2e45' } }
+    }
+  }
+});
+
+// ── DIENST CHART ───────────────────────────────────────────
+const dienstCtx = document.getElementById('dienstChart').getContext('2d');
+new Chart(dienstCtx, {
+  type: 'bar',
+  data: {
+    labels: ['Veiligheid','Ops status','Producten','Onderhoud','Aandacht'],
+    datasets: [
+      { label: 'Dienst A', data: [12,8,5,6,9], backgroundColor: 'rgba(26,111,186,.7)', borderRadius: 3, borderWidth: 0 },
+      { label: 'Dienst B', data: [9,11,7,4,7], backgroundColor: 'rgba(196,154,0,.7)', borderRadius: 3, borderWidth: 0 },
+      { label: 'Dienst C', data: [7,6,4,8,5], backgroundColor: 'rgba(26,158,80,.7)', borderRadius: 3, borderWidth: 0 },
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { stacked: false, grid: { display: false }, ticks: { font: { size: 9 }, color: '#7a90a8', maxRotation: 30 } },
+      y: { grid: { color: 'rgba(0,0,0,.05)' }, ticks: { font: { size: 10 }, color: '#7a90a8' } }
+    }
+  }
+});
+
+// ── HEATMAP ────────────────────────────────────────────────
+const heatmap = document.getElementById('heatmap');
+const days = ['Zo','Ma','Di','Wo','Do','Vr','Za'];
+days.forEach(d => {
+  const h = document.createElement('div');
+  h.style.cssText = 'text-align:center;font-size:9px;font-weight:700;color:#7a90a8;padding:3px 0;letter-spacing:.3px;';
+  h.textContent = d;
+  heatmap.appendChild(h);
+});
+
+// April 2026 starts on Wednesday (index 3)
+const colors = {
+  '': '#e8edf3',
+  'green': '#1a9e50', 'yellow': '#c49a00', 'red': '#c0392b', 'future': '#e8edf3'
+};
+const april = [
+  '','','','g','g','g','g',   // week 1: 1-4
+  'y','g','g','g','r','g','g', // week 2: 5-11
+  'g','g','y','g','g','g','g', // week 3: 12-18 (today ~16)
+  'g','g','g','g','g','g','g', // week 4: 19-25
+  'g','g','g','g','g',         // week 5: 26-30
+];
+
+let dayNum = 1;
+april.forEach((status, i) => {
+  const cell = document.createElement('div');
+  if (status === '') {
+    cell.style.cssText = 'aspect-ratio:1;border-radius:4px;';
+    dayNum = 1;
+  } else {
+    const color = status === 'g' ? colors.green : status === 'y' ? colors.yellow : status === 'r' ? colors.red : colors[''];
+    const isToday = dayNum === 16;
+    cell.style.cssText = `aspect-ratio:1;border-radius:4px;background:${color};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:${isToday?700:500};color:#fff;cursor:default;opacity:${dayNum>16?0.35:1};${isToday?'outline:2px solid #1a2e45;outline-offset:1px;':''}`;
+    cell.textContent = dayNum;
+    dayNum++;
+  }
+  heatmap.appendChild(cell);
+});
+</script>
+</body>
+</html>
