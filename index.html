@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IDEX - HES International</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root, [data-theme="dark"] {
@@ -392,6 +394,66 @@ body.viewer-mode .viewer-banner{display:flex!important;}
 
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(14px);background:var(--hes);color:#fff;padding:9px 18px;border-radius:9px;font-size:13px;font-weight:500;opacity:0;transition:all .3s;pointer-events:none;z-index:999;white-space:nowrap;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+/* ── STORINGEN ── */
+#page-storingen{display:none;}
+#page-storingen.visible{display:block;}
+.page-tab.active.tab-storingen{color:#e74c3c;}
+.st-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.st-title{font-family:"Syne",sans-serif;font-weight:800;font-size:18px;}
+.st-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+/* Stats row */
+.st-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;}
+.st-stat{background:var(--surface);border-radius:12px;border:1px solid var(--border);padding:12px 16px;box-shadow:0 2px 6px rgba(0,0,0,.05);}
+.st-stat-val{font-family:"Syne",sans-serif;font-size:30px;font-weight:800;line-height:1;}
+.st-stat-label{font-size:10px;color:var(--muted2);margin-top:3px;}
+/* Filters */
+.st-filters{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;align-items:center;}
+.st-fbtn{padding:5px 12px;border-radius:7px;border:1px solid var(--border2);background:var(--surface2);color:var(--muted2);font-size:11px;font-weight:600;cursor:pointer;font-family:"DM Sans",sans-serif;transition:all .15s;}
+.st-fbtn:hover{background:var(--surface3);color:var(--text);}
+.st-fbtn.on{background:rgba(231,76,60,.15);color:#e74c3c;border-color:rgba(231,76,60,.35);}
+.st-fbtn.on-s{background:rgba(26,158,80,.15);color:#1a9e50;border-color:rgba(26,158,80,.35);}
+/* Cards */
+.st-grid{display:flex;flex-direction:column;gap:8px;}
+.st-card{background:var(--surface);border-radius:12px;border:1px solid var(--border);padding:0;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04);cursor:pointer;transition:all .15s;}
+.st-card:hover{box-shadow:0 3px 10px rgba(0,0,0,.1);transform:translateY(-1px);}
+.st-card-inner{display:flex;align-items:stretch;gap:0;}
+.st-card-stripe{width:5px;flex-shrink:0;}
+.st-stripe-actief{background:#e74c3c;}
+.st-stripe-gereed{background:#1a9e50;}
+.st-stripe-reparatie{background:#3498db;}
+.st-card-body{flex:1;padding:10px 14px;display:flex;align-items:center;gap:12px;}
+.st-card-info{flex:1;}
+.st-card-name{font-weight:600;font-size:13px;}
+.st-card-meta{font-size:11px;color:var(--muted2);margin-top:3px;display:flex;gap:10px;flex-wrap:wrap;}
+.st-card-badges{display:flex;gap:6px;align-items:center;flex-wrap:wrap;flex-shrink:0;}
+.st-badge{display:inline-block;padding:2px 8px;border-radius:5px;font-size:10px;font-weight:700;}
+.st-badge-mvp{background:rgba(231,76,60,.15);color:#e74c3c;}
+.st-badge-zvp{background:rgba(245,197,66,.15);color:#c49a00;}
+.st-badge-rep{background:rgba(52,152,219,.15);color:#3498db;}
+.st-badge-act{background:rgba(231,76,60,.12);color:#e74c3c;border:1px solid rgba(231,76,60,.3);}
+.st-badge-ger{background:rgba(26,158,80,.12);color:#1a9e50;border:1px solid rgba(26,158,80,.3);}
+.st-badge-ges{background:rgba(90,122,153,.12);color:#5a7a99;border:1px solid rgba(90,122,153,.3);}
+.st-badge-rep2{background:rgba(52,152,219,.12);color:#3498db;border:1px solid rgba(52,152,219,.3);}
+.st-shift-A{background:rgba(52,152,219,.12);color:#3498db;}
+.st-shift-B{background:rgba(245,197,66,.12);color:#c49a00;}
+.st-shift-C{background:rgba(46,204,113,.12);color:#1a9e50;}
+/* Add button */
+.st-add-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;background:rgba(231,76,60,.12);color:#e74c3c;border:1px solid rgba(231,76,60,.3);font-size:13px;font-weight:500;font-family:"DM Sans",sans-serif;cursor:pointer;transition:all .15s;}
+.st-add-btn:hover{background:rgba(231,76,60,.22);}
+/* Modal form */
+.st-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.st-jobsoort-btns{display:flex;gap:6px;flex-wrap:wrap;}
+.st-jbtn{padding:6px 12px;border-radius:7px;border:1px solid var(--border2);background:var(--surface2);color:var(--muted2);font-size:12px;font-weight:500;cursor:pointer;font-family:"DM Sans",sans-serif;transition:all .15s;}
+.st-jbtn:hover{background:var(--surface3);}
+.st-jbtn.sel-mvp{background:rgba(231,76,60,.2);color:#e74c3c;border-color:rgba(231,76,60,.5);}
+.st-jbtn.sel-zvp{background:rgba(245,197,66,.2);color:#c49a00;border-color:rgba(245,197,66,.5);}
+.st-jbtn.sel-rep{background:rgba(52,152,219,.2);color:#3498db;border-color:rgba(52,152,219,.5);}
+/* Ultimo notice */
+.st-ultimo-notice{background:rgba(52,152,219,.08);border:1px solid rgba(52,152,219,.2);border-radius:8px;padding:8px 14px;font-size:11px;color:#3498db;display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+/* Upload area */
+.st-upload-bar{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 14px;margin-bottom:12px;}
+.st-ul-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:7px;background:rgba(52,152,219,.12);color:#3498db;border:1px solid rgba(52,152,219,.25);cursor:pointer;font-size:12px;font-weight:500;font-family:"DM Sans",sans-serif;}
+
 /* ── WERKVERGUNNING ── */
 #page-wv{display:none;}
 #page-wv.visible{display:block;}
@@ -629,6 +691,7 @@ body.viewer-mode .viewer-banner{display:flex!important;}
       <button class="sqdc-btn" id="filter-cost" onclick="filterView('cost')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg><span>Cost</span></button>
     </div>
     <div style="width:1px;height:28px;background:var(--border2);"></div>
+    <a href="storingen-dashboard.html" style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:7px;background:rgba(231,76,60,.12);color:#e74c3c;border:1px solid rgba(231,76,60,.25);font-size:12px;font-weight:700;text-decoration:none;font-family:'DM Sans',sans-serif;" title="Storingen Dashboard">&#x26A0; Storingen</a>
     <a href="iwex.html" style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:7px;background:rgba(26,111,186,.12);color:#1a6fba;border:1px solid rgba(26,111,186,.25);font-size:12px;font-weight:700;text-decoration:none;font-family:'DM Sans',sans-serif;" title="Wekelijks overzicht">IWEX</a>
     <a href="imex.html" style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:7px;background:rgba(155,89,182,.12);color:#9b59b6;border:1px solid rgba(155,89,182,.25);font-size:12px;font-weight:700;text-decoration:none;font-family:'DM Sans',sans-serif;" title="Maandelijks overzicht">IMEX</a>
     <div class="badge" id="week-badge">Week —</div>
@@ -663,6 +726,10 @@ body.viewer-mode .viewer-banner{display:flex!important;}
   <button class="page-tab tab-wv" id="tab-wv" onclick="switchPage('wv')">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 14l-3-3 1.41-1.41L11 12.17l4.59-4.58L17 9l-6 6z"/></svg>
     Werkvergunning
+  </button>
+  <button class="page-tab tab-storingen" id="tab-storingen" onclick="switchPage('storingen')">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+    Storingen
   </button>
 
 </div>
@@ -788,6 +855,7 @@ body.viewer-mode .viewer-banner{display:flex!important;}
         <button class="do-shift-btn" id="ds-C" onclick="setShift('C')">C (23-07)</button>
         <span style="font-size:12px;color:var(--muted2);">Naam:</span>
         <input class="do-author-input" id="do-author" placeholder="Jouw naam..." oninput="saveDOAuthor(this.value)">
+        <span id="do-current-time" style="font-size:11px;color:var(--muted2);margin-left:4px;"></span>
       </div>
     </div>
     <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end;">
@@ -845,6 +913,12 @@ body.viewer-mode .viewer-banner{display:flex!important;}
         <svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
         Taak toevoegen
       </button>
+      <label class="btn" style="background:rgba(52,152,219,.12);color:#3498db;border:1px solid rgba(52,152,219,.3);cursor:pointer;display:inline-flex;align-items:center;gap:5px;" title="Upload 24-uurs planning PDF">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:13px;height:13px;"><path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/></svg>
+        Upload planning PDF
+        <input type="file" accept=".pdf" style="display:none;" onchange="plParsePDF(this)">
+      </label>
+      <span id="pl-pdf-status" style="font-size:11px;color:var(--muted2);margin-left:4px;"></span>
     </div>
   </div>
 
@@ -1059,6 +1133,133 @@ body.viewer-mode .viewer-banner{display:flex!important;}
   </div>
 </div>
 
+
+<!-- STORINGEN PAGE -->
+<div id="page-storingen">
+  <div class="st-header">
+    <div class="st-title">&#x26A0;&#xFE0F; Storingen Dienst</div>
+    <div class="st-toolbar">
+      <div style="display:flex;gap:5px;">
+        <button class="st-fbtn" id="stsh-A" onclick="stSetShift('A')" style="color:#3498db;border-color:rgba(52,152,219,.4);">A 07-15</button>
+        <button class="st-fbtn" id="stsh-B" onclick="stSetShift('B')" style="color:#c49a00;border-color:rgba(196,154,0,.4);">B 15-23</button>
+        <button class="st-fbtn" id="stsh-C" onclick="stSetShift('C')" style="color:#1a9e50;border-color:rgba(26,158,80,.4);">C 23-07</button>
+        <button class="st-fbtn on" id="stsh-all" onclick="stSetShift('all')">Alle</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Ultimo notice -->
+  <div class="st-ultimo-notice">
+    <svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;flex-shrink:0;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+    <span><strong>Ultimo koppeling gepland</strong> — Storingen worden straks automatisch ingeladen vanuit Ultimo. Nu handmatig invoeren of PDF uploaden.</span>
+    <div style="margin-left:auto;display:flex;gap:6px;">
+      <label class="st-ul-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:12px;height:12px;"><path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/></svg>
+        Upload Ultimo PDF
+        <input type="file" accept=".pdf" style="display:none;" onchange="stUploadPDF(this)">
+      </label>
+      <span id="st-pdf-status" style="font-size:11px;color:var(--muted2);align-self:center;"></span>
+    </div>
+  </div>
+
+  <!-- Date nav -->
+  <div class="date-nav" style="margin-bottom:12px;">
+    <button class="nav-btn" onclick="stShiftDay(-1)">&#9664;</button>
+    <div id="st-date-label" style="font-family:'Syne',sans-serif;font-weight:700;font-size:14px;flex:1;text-align:center;">&#x2014;</div>
+    <input type="date" id="st-date-picker" onchange="stJumpDate(this.value)">
+    <button class="nav-btn" onclick="stGoToday()">Vandaag</button>
+    <button class="nav-btn" onclick="stShiftDay(1)">&#9654;</button>
+  </div>
+
+  <!-- Stats -->
+  <div class="st-stats" id="st-stats"></div>
+
+  <!-- Filters -->
+  <div class="st-filters">
+    <span style="font-size:11px;font-weight:600;color:var(--muted2);text-transform:uppercase;letter-spacing:.5px;">Status:</span>
+    <button class="st-fbtn on" id="stf-all" onclick="stFilter('all')">Alle</button>
+    <button class="st-fbtn" id="stf-actief" onclick="stFilter('actief')">&#x1F534; Actief</button>
+    <button class="st-fbtn" id="stf-gereed" onclick="stFilter('gereed')">&#x1F7E2; Gereed</button>
+    <button class="st-fbtn" id="stf-reparatie" onclick="stFilter('reparatie')">&#x1F535; Reparatie</button>
+    <button class="st-fbtn" id="stf-gesloten" onclick="stFilter('gesloten')">&#x26AB; Gesloten</button>
+    <div style="width:1px;height:18px;background:var(--border2);margin:0 4px;"></div>
+    <span style="font-size:11px;font-weight:600;color:var(--muted2);text-transform:uppercase;letter-spacing:.5px;">Type:</span>
+    <button class="st-fbtn" id="stf-mvp" onclick="stFilter('mvp')">Met productieverlies</button>
+    <button class="st-fbtn" id="stf-zvp" onclick="stFilter('zvp')">Zonder productieverlies</button>
+  </div>
+
+  <!-- Grid -->
+  <div class="st-grid" id="st-grid"></div>
+
+  <!-- Detail/Add overlay -->
+  <div class="overlay" id="st-overlay">
+    <div class="modal" style="max-width:620px;">
+      <div class="mhead">
+        <div>
+          <div class="mtitle" id="st-modal-title">&#x26A0;&#xFE0F; Storing melden</div>
+          <div style="font-size:11px;color:var(--muted2);margin-top:3px;" id="st-modal-sub"></div>
+        </div>
+        <button class="btn btn-cancel" onclick="stCloseModal()">&#x2715;</button>
+      </div>
+      <div class="mbody" id="st-modal-body"></div>
+      <div class="mfoot">
+        <span id="st-modal-info" style="font-size:11px;color:var(--muted2);"></span>
+        <div class="mfoot-right">
+          <button class="btn btn-cancel" onclick="stCloseModal()">Annuleren</button>
+          <button class="btn btn-save" onclick="stSave()" id="st-save-btn" style="background:#e74c3c;">&#x1F4BE; Opslaan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+        <div style="font-size:11px;color:var(--muted2);margin-top:3px;" id="sr-parse-meta"></div>
+      </div>
+      <button class="btn btn-cancel" onclick="srClosePreview()">&#x2715;</button>
+    </div>
+    <div class="mbody" id="sr-parse-body"></div>
+    <div class="mfoot">
+      <div style="font-size:11px;color:var(--muted2);" id="sr-parse-note">
+        &#x2139;&#xFE0F; Safety en Quality opmerkingen worden in Fase 4 automatisch verwerkt via AI Builder
+      </div>
+      <div class="mfoot-right">
+        <button class="btn btn-cancel" onclick="srClosePreview()">Annuleren</button>
+        <button class="btn btn-save" onclick="srApplyParsed()" style="background:#3498db;">
+          &#x2713; Toepassen op Delivery
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- PLANNING PDF PREVIEW MODAL -->
+<div class="overlay" id="pl-parse-overlay">
+  <div class="modal" style="max-width:780px;max-height:90vh;overflow-y:auto;">
+    <div class="mhead">
+      <div>
+        <div class="mtitle">&#x1F4C4; 24-uurs planning verwerkt — voorvertoning</div>
+        <div style="font-size:11px;color:var(--muted2);margin-top:3px;" id="pl-parse-meta"></div>
+      </div>
+      <button class="btn btn-cancel" onclick="plClosePreview()">&#x2715;</button>
+    </div>
+    <div class="mbody" id="pl-parse-body"></div>
+    <div class="mfoot">
+      <div style="font-size:11px;color:var(--muted2);">
+        <span id="pl-parse-count"></span> &nbsp;|&nbsp; Bestaande taken worden niet overschreven
+      </div>
+      <div class="mfoot-right">
+        <button class="btn btn-cancel" onclick="plClosePreview()">Annuleren</button>
+        <button class="btn btn-save" id="pl-apply-btn" onclick="plApplyParsed()" style="background:#3498db;">
+          &#x2713; Toepassen in Planning
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL -->
 <div class="overlay" id="overlay">
   <div class="modal">
@@ -1176,7 +1377,7 @@ function jumpToDate(v){if(v)setViewing(v);}
 
 // ══ PAGE SWITCHING ══
 function switchPage(page){
-  ['board','actions','dagorder','planning','shifts','wv'].forEach(p=>{
+  ['board','actions','dagorder','planning','shifts','wv','storingen'].forEach(p=>{
     const tab=document.getElementById('tab-'+p);
     if(tab) tab.classList.toggle('active',p===page);
   });
@@ -1186,6 +1387,7 @@ function switchPage(page){
   document.getElementById('page-planning').classList.toggle('visible',page==='planning');
   document.getElementById('page-shifts').classList.toggle('visible',page==='shifts');
   document.getElementById('page-wv').classList.toggle('visible',page==='wv');
+  document.getElementById('page-storingen').classList.toggle('visible',page==='storingen');
   if(page==='actions'){
     alCurrentFilter='all';
     ['all','open','overdue','p1','p2','done'].forEach(id=>{
@@ -1194,10 +1396,11 @@ function switchPage(page){
     const ab=document.getElementById('alfb-all');if(ab)ab.classList.add('on');
     renderActionList();
   }
-  if(page==='dagorder') setDOViewing(doViewing);
+  if(page==='dagorder'){ setDOViewing(doViewing); setTimeout(initDOShift,50); }
   if(page==='planning') plRender();
   if(page==='shifts') srSetViewing(srViewing);
   if(page==='wv') wvRender();
+  if(page==='storingen'){ stRenderDate(); }
 }
 
 // ══ SQDC BOARD FILTER ══
@@ -1368,12 +1571,38 @@ const DO_ICONS = {
 
 let doViewing=todayStr(), doShift='A';
 
+function getActiveShift(){
+  const h=new Date().getHours();
+  if(h>=7&&h<15) return 'A';
+  if(h>=15&&h<23) return 'B';
+  return 'C';
+}
+
 function setShift(s){
+  const auto=getActiveShift();
+  if(s!==auto){
+    if(!confirm('Dienst '+s+' is nu niet actief. Huidige dienst = '+auto+'. Toch wisselen?')) return;
+  }
   doShift=s;
   ['A','B','C'].forEach(x=>{
     const b=document.getElementById('ds-'+x);
-    if(b)b.classList.toggle('active',x===s);
+    if(!b) return;
+    b.classList.toggle('active',x===s);
+    b.style.opacity=(x===s)?'1':(x===auto)?'0.85':'0.4';
   });
+  updateDOTimeLabel();
+}
+
+function initDOShift(){
+  const auto=getActiveShift();
+  doShift=auto;
+  ['A','B','C'].forEach(x=>{
+    const b=document.getElementById('ds-'+x);
+    if(!b) return;
+    b.classList.toggle('active',x===auto);
+    b.style.opacity=(x===auto)?'1':'0.4';
+  });
+  updateDOTimeLabel();
 }
 function setDOViewing(s){
   doViewing=s;
@@ -1676,16 +1905,19 @@ function plRender() {
 
 function plRenderWeek(days, tasks, today) {
   const resources = [
-    { id:'ships', label:'Schepen', icon:'🚢', types:['ship'] },
-    { id:'cranes', label:'Kranen', icon:'🏗️', types:['crane'] },
-    { id:'trucks', label:'Vrachtwagens', icon:'🚛', types:['truck'] },
-    { id:'maintenance', label:'Onderhoud', icon:'🔧', types:['maintenance'] },
-    { id:'other', label:'Overig', icon:'📋', types:['other'] },
+    { id:'ships',       label:'Schepen',      icon:'🚢', types:['ship'] },
+    { id:'cranes',      label:'Kranen',        icon:'🏗️', types:['crane'] },
+    { id:'trucks',      label:'Vrachtwagens',  icon:'🚛', types:['truck'] },
+    { id:'maintenance', label:'Onderhoud',     icon:'🔧', types:['maintenance'] },
+    { id:'other',       label:'Overig',        icon:'📋', types:['other'] },
   ];
   const grid = document.getElementById('pl-week-grid');
   const dayNames = ['Ma','Di','Wo','Do','Vr','Za','Zo'];
 
-  let html = '<div class="pl-week-head">';
+  let html = '<div class="pl-week-grid" style="border-radius:12px;overflow:hidden;border:1px solid var(--border);">';
+
+  // Header
+  html += '<div style="display:grid;grid-template-columns:180px repeat(7,1fr);background:var(--surface2);border-bottom:1px solid var(--border);">';
   html += '<div class="pl-week-head-cell" style="text-align:left;padding-left:12px;">Activiteit</div>';
   days.forEach((d,i) => {
     const dt = new Date(d); dt.setHours(0,0,0,0);
@@ -1696,37 +1928,52 @@ function plRenderWeek(days, tasks, today) {
 
   resources.forEach(res => {
     const resTasks = tasks.filter(t => res.types.includes(t.type));
-    html += `<div class="pl-week-row">`;
+    html += '<div style="display:grid;grid-template-columns:180px repeat(7,1fr);border-bottom:1px solid var(--border);">';
     html += `<div class="pl-resource-label"><span style="font-size:16px;">${res.icon}</span>${res.label}</div>`;
     days.forEach((d,di) => {
       const dt = new Date(d); dt.setHours(0,0,0,0);
       const isToday = dt.getTime() === today.getTime();
       const dStr = d.toISOString().split('T')[0];
-      const dayTasks = resTasks.filter(t => t.startDate <= dStr && t.endDate >= dStr);
+      const dayTasks = resTasks.filter(t => t.startDate === dStr);
       html += `<div class="pl-week-cell${isToday?' today-col':''}">`;
       if (dayTasks.length === 0 && res.id === 'ships') {
         html += `<div style="height:40px;display:flex;align-items:center;justify-content:center;"><button onclick="plAddTaskForDay('${dStr}','${res.types[0]}')" style="background:transparent;border:1px dashed var(--border);border-radius:5px;color:var(--muted);font-size:10px;padding:3px 6px;cursor:pointer;width:100%;">+</button></div>`;
       }
-      dayTasks.forEach(t => {
-        const shiftCls = 'shift-'+t.shift;
-        const statusCls = t.status==='klaar'?' status-done':t.status==='bezig'?' status-progress':'';
-        html += `<div class="pl-bar ${shiftCls}${statusCls}" onclick="plEditTask(${t.id})" title="${t.name} — ${STATUS_LABELS[t.status]||t.status}">`;
-        html += `${SHIP_ICONS[t.type]||'📋'} ${t.name}`;
-        if (t.product) html += ` <span style="opacity:.7;font-size:9px;">(${t.product})</span>`;
-        html += '</div>';
+      // Group by shift A→B→C, show shift mini-label before each group
+      const shiftColors = {A:'#3498db', B:'#c49a00', C:'#1a9e50'};
+      let hasContent = false;
+      ['A','B','C'].forEach(sh => {
+        const shTasks = dayTasks.filter(t => t.shift === sh);
+        if (!shTasks.length) return;
+        if (hasContent) html += '<div style="height:2px;"></div>';
+        html += `<div style="font-size:8px;font-weight:700;color:${shiftColors[sh]};padding:1px 3px;margin-bottom:1px;border-left:2px solid ${shiftColors[sh]};padding-left:4px;opacity:.85;">${sh}</div>`;
+        shTasks.forEach(t => {
+          const statusCls = t.status==='klaar'?' status-done':t.status==='bezig'?' status-progress':'';
+          html += `<div class="pl-bar shift-${sh}${statusCls}" onclick="plEditTask(${t.id})" title="${escHtml(t.name)} — Dienst ${sh} — ${STATUS_LABELS[t.status]||t.status}">`;
+          html += `${SHIP_ICONS[t.type]||'📋'} ${escHtml(t.name)}`;
+          if (t.product) html += ` <span style="opacity:.7;font-size:9px;">(${escHtml(t.product)})</span>`;
+          if (t.planned) html += ` <span style="opacity:.7;font-size:9px;">${escHtml(t.planned)}</span>`;
+          html += '</div>';
+        });
+        hasContent = true;
       });
       html += '</div>';
     });
     html += '</div>';
   });
 
-  // Shift legend row
-  html += `<div style="display:flex;gap:12px;padding:8px 14px;border-top:1px solid var(--border);flex-wrap:wrap;">`;
+  // Shift legend
+  html += `<div style="display:flex;gap:12px;padding:8px 14px;border-top:1px solid var(--border);background:var(--surface2);flex-wrap:wrap;">`;
   html += `<span style="font-size:10px;color:var(--muted2);">Diensten:</span>`;
-  html += `<span class="pl-bar shift-A" style="font-size:10px;padding:2px 8px;">Dienst A (07-15)</span>`;
-  html += `<span class="pl-bar shift-B" style="font-size:10px;padding:2px 8px;">Dienst B (15-23)</span>`;
-  html += `<span class="pl-bar shift-C" style="font-size:10px;padding:2px 8px;">Dienst C (23-07)</span>`;
-  html += '</div>';
+  ['A','B','C'].forEach(sh => {
+    const colors = {A:'#3498db',B:'#c49a00',C:'#1a9e50'};
+    const labels = {A:'Dagdienst 07-15',B:'Avonddienst 15-23',C:'Nachtdienst 23-07'};
+    html += `<div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted2);">
+      <div style="width:3px;height:14px;background:${colors[sh]};border-radius:2px;"></div>
+      <span style="font-weight:700;color:${colors[sh]};">Dienst ${sh}</span> ${labels[sh]}
+    </div>`;
+  });
+  html += '</div></div>';
 
   grid.innerHTML = html;
 }
@@ -2306,6 +2553,678 @@ function wvCloseDetail() {
 
 function wvOpenNew() {
   showToast('&#x1F6E1;&#xFE0F; Nieuwe vergunning aanmaken komt in Fase 6 (nov 2026)');
+}
+
+
+// ══ STORINGEN ════════════════════════════════════════════════════
+const ST_JOBSOORT = {
+  mvp: {label:'Met productieverlies', badge:'st-badge-mvp', stripe:'st-stripe-actief'},
+  zvp: {label:'Zonder productieverlies', badge:'st-badge-zvp', stripe:'st-stripe-reparatie'},
+  rep: {label:'Reparatie', badge:'st-badge-rep', stripe:'st-stripe-reparatie'},
+};
+const ST_STATUS = {
+  actief:    {label:'Actief',    badge:'st-badge-act',  stripe:'st-stripe-actief'},
+  gereed:    {label:'Gereed',    badge:'st-badge-ger',  stripe:'st-stripe-gereed'},
+  gesloten:  {label:'Gesloten',  badge:'st-badge-ges',  stripe:'st-stripe-gereed'},
+  reparatie: {label:'Reparatie', badge:'st-badge-rep2', stripe:'st-stripe-reparatie'},
+};
+
+let stDate = todayStr();
+let stShiftFilter = 'all';
+let stStatusFilter = 'all';
+let stEditId = null;
+let stJobsoort = 'mvp';
+
+function stLoadData(dateStr){
+  try{ return JSON.parse(localStorage.getItem('st:'+dateStr)||'[]'); }catch(e){ return []; }
+}
+function stSaveData(dateStr,data){
+  try{ localStorage.setItem('st:'+dateStr,JSON.stringify(data)); }catch(e){}
+}
+function stSetShift(s){
+  stShiftFilter=s;
+  ['A','B','C','all'].forEach(x=>{
+    const b=document.getElementById('stsh-'+x);
+    if(!b) return;
+    b.classList.remove('on','on-s');
+    if(x===s) b.classList.add(s==='all'?'on':'on-s');
+  });
+  stRender();
+}
+function stFilter(f){
+  stStatusFilter=f;
+  ['all','actief','gereed','gesloten','reparatie','mvp','zvp'].forEach(id=>{
+    const b=document.getElementById('stf-'+id);
+    if(b) b.classList.remove('on');
+  });
+  const btn=document.getElementById('stf-'+f);
+  if(btn) btn.classList.add('on');
+  stRender();
+}
+function stShiftDay(n){ stDate=shiftDateStr(stDate,n); stRenderDate(); }
+function stGoToday(){ stDate=todayStr(); stRenderDate(); }
+function stJumpDate(v){ if(v){ stDate=v; stRenderDate(); } }
+function stRenderDate(){
+  document.getElementById('st-date-label').textContent=friendlyDate(stDate);
+  document.getElementById('st-date-picker').value=stDate;
+  stRender();
+}
+
+function stRender(){
+  let data=stLoadData(stDate);
+  // Apply filters
+  let filtered=data;
+  if(stShiftFilter!=='all') filtered=filtered.filter(s=>s.shift===stShiftFilter);
+  if(stStatusFilter==='actief') filtered=filtered.filter(s=>s.status==='actief');
+  else if(stStatusFilter==='gereed') filtered=filtered.filter(s=>s.status==='gereed');
+  else if(stStatusFilter==='reparatie') filtered=filtered.filter(s=>s.status==='reparatie');
+  else if(stStatusFilter==='mvp') filtered=filtered.filter(s=>s.jobsoort==='mvp');
+  else if(stStatusFilter==='zvp') filtered=filtered.filter(s=>s.jobsoort==='zvp');
+
+  // Stats
+  const actief=data.filter(s=>s.status==='actief').length;
+  const gereed=data.filter(s=>s.status==='gereed').length;
+  const mvp=data.filter(s=>s.jobsoort==='mvp').length;
+  const total=data.length;
+  document.getElementById('st-stats').innerHTML=[
+    {val:actief, label:'Actief', color:'#e74c3c'},
+    {val:gereed, label:'Gereed', color:'#1a9e50'},
+    {val:mvp, label:'Met productieverlies', color:'#e67e22'},
+    {val:total, label:'Totaal vandaag', color:'var(--muted2)'},
+  ].map(s=>`<div class="st-stat"><div class="st-stat-val" style="color:${s.color};">${s.val}</div><div class="st-stat-label">${s.label}</div></div>`).join('');
+
+  // Grid
+  const grid=document.getElementById('st-grid');
+  if(!filtered.length){
+    grid.innerHTML='<div style="text-align:center;padding:40px;color:var(--muted2);font-size:13px;">Geen storingen gevonden voor deze dag</div>';
+    return;
+  }
+  const shiftCls={A:'st-shift-A',B:'st-shift-B',C:'st-shift-C'};
+  grid.innerHTML=filtered.map(s=>{
+    const st=ST_STATUS[s.status]||ST_STATUS.actief;
+    const jb=ST_JOBSOORT[s.jobsoort]||ST_JOBSOORT.mvp;
+    return `<div class="st-card" onclick="stShowDetail(${s.id})">
+      <div class="st-card-inner">
+        <div class="st-card-stripe ${st.stripe}"></div>
+        <div class="st-card-body">
+          <div class="st-card-info">
+            <div class="st-card-name">${escHtml(s.procesfunctie)}${s.installatie?' — '+escHtml(s.installatie):''}</div>
+            ${s.omschrijving?`<div style="font-size:12px;font-weight:500;color:var(--text);margin-top:3px;margin-bottom:2px;">${escHtml(s.omschrijving)}</div>`:''}
+            <div class="st-card-meta">
+              ${s.ultId?`<span style="color:var(--blue);font-weight:600;">Ult-ID: ${s.ultId}</span>`:''}
+              <span>&#x1F551; ${s.melddatum||''} ${s.meldtijd||''}</span>
+              ${s.melder?`<span>&#x1F464; ${escHtml(s.melder)}</span>`:''}
+              ${s.storingsoorzaak?`<span>&#x26A0; ${escHtml(s.storingsoorzaak)}</span>`:''}
+            </div>
+          </div>
+          <div class="st-card-badges">
+            <span class="st-badge ${shiftCls[s.shift]||''}">Dienst ${s.shift}</span>
+            <span class="st-badge ${jb.badge}">${jb.label}</span>
+            <span class="st-badge ${st.badge}">${st.label}</span>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+
+
+
+
+function stShowDetail(id){
+  const data=stLoadData(stDate);
+  const s=data.find(x=>x.id===id);
+  if(!s) return;
+  const jb=ST_JOBSOORT[s.jobsoort]||ST_JOBSOORT.mvp;
+  const st2=ST_STATUS[s.status]||ST_STATUS.actief;
+  document.getElementById('st-modal-title').innerHTML=escHtml(s.procesfunctie)+(s.installatie?' &mdash; '+escHtml(s.installatie):'');
+  document.getElementById('st-modal-sub').innerHTML=
+    '<span class="st-badge '+jb.badge+'">'+jb.label+'</span> &nbsp; '+
+    '<span class="st-badge '+st2.badge+'">'+st2.label+'</span>'+
+    (s.ultId?' &nbsp; <span style="color:var(--blue);font-size:11px;font-weight:600;">Ult-ID: '+s.ultId+'</span>':'');
+  document.getElementById('st-modal-info').textContent=s.source==='ultimo-pdf'?'Ingeladen uit Ultimo PDF':'Handmatige invoer';
+  document.getElementById('st-save-btn').style.display='none';
+  const shiftBadge={'A':'st-shift-A','B':'st-shift-B','C':'st-shift-C'};
+  document.getElementById('st-modal-body').innerHTML=`
+    <div class="row-block">
+      <div class="wv-field-grid">
+        <div class="wv-field"><div class="wv-field-label">Procesfunctie</div><div class="wv-field-value">${escHtml(s.procesfunctie||'—')}</div></div>
+        <div class="wv-field"><div class="wv-field-label">Installatie</div><div class="wv-field-value">${escHtml(s.installatie||'—')}</div></div>
+        <div class="wv-field"><div class="wv-field-label">Melddatum</div><div class="wv-field-value">${s.melddatum||'—'} ${s.meldtijd||''}</div></div>
+        <div class="wv-field"><div class="wv-field-label">Dienst</div><div class="wv-field-value"><span class="st-badge ${shiftBadge[s.shift]||''}">${'Dienst '+(s.shift||'?')}</span></div></div>
+        <div class="wv-field"><div class="wv-field-label">Storingsoorzaak</div><div class="wv-field-value">${escHtml(s.storingsoorzaak||'—')}</div></div>
+        <div class="wv-field"><div class="wv-field-label">Melder</div><div class="wv-field-value">${escHtml(s.melder||'—')}</div></div>
+      </div>
+    </div>
+    <div class="row-block">
+      <div class="wv-section-title">Omschrijving</div>
+      <div style="background:var(--surface2);border-radius:8px;padding:10px 12px;font-size:13px;">${escHtml(s.omschrijving||'—')}</div>
+    </div>
+    ${s.opmerkingen?'<div class="row-block"><div class="wv-section-title">Opmerkingen</div><div style="background:var(--surface2);border-radius:8px;padding:10px 12px;font-size:13px;">'+escHtml(s.opmerkingen)+'</div></div>':''}
+    <div style="background:rgba(52,152,219,.06);border:1px solid rgba(52,152,219,.2);border-radius:8px;padding:8px 12px;font-size:11px;color:#3498db;margin-top:4px;">
+      Bron: ${s.source==='ultimo-pdf'?'Ultimo PDF import':'Handmatige invoer'}
+    </div>`;
+  document.getElementById('st-overlay').classList.add('open');
+}
+
+function stSelectJobsoort(btn,type){
+  stJobsoort=type;
+  document.querySelectorAll('.st-jbtn').forEach(b=>b.className='st-jbtn');
+  btn.classList.add('sel-'+type);
+}
+
+
+
+async function stUploadPDF(input){
+  const file=input.files[0];
+  if(!file) return;
+  const el=document.getElementById('st-pdf-status');
+  if(el) el.textContent='\u23F3 PDF inlezen...';
+  try {
+    const buf=await file.arrayBuffer();
+    const pdf=await pdfjsLib.getDocument({data:buf}).promise;
+    // Collect ALL items with coordinates across all pages
+    const allItems=[];
+    let pageOffsetY=0;
+    for(let p=1;p<=pdf.numPages;p++){
+      const page=await pdf.getPage(p);
+      const vp=page.getViewport({scale:1});
+      const tc=await page.getTextContent();
+      tc.items.forEach(item=>{
+        if(item.str.trim()){
+          allItems.push({
+            str:item.str.trim(),
+            x:Math.round(item.transform[4]),
+            y:Math.round(pageOffsetY + vp.height - item.transform[5])
+          });
+        }
+      });
+      pageOffsetY+=vp.height+20;
+    }
+    const parsed=stParsePDF(allItems);
+    if(parsed.length===0){
+      if(el) el.textContent='\u26A0 Geen storingen herkend';
+      showToast('\u26A0 PDF gelezen maar geen storingen gevonden');
+      return;
+    }
+    const existing=stLoadData(stDate);
+    const existingIdMap=new Map(existing.map((s,i)=>[s.ultId,i]).filter(([id])=>id));
+    let added=0, updated=0;
+    parsed.forEach(s=>{
+      if(s.ultId && existingIdMap.has(s.ultId)){
+        // Update status if changed
+        const idx=existingIdMap.get(s.ultId);
+        if(existing[idx].status !== s.status){
+          existing[idx].status=s.status;
+          updated++;
+        }
+        return;
+      }
+      existing.push(s);
+      if(s.ultId) existingIdMap.set(s.ultId, existing.length-1);
+      added++;
+    });
+    stSaveData(stDate,existing);
+    stRender();
+    if(el) el.textContent='\u2713 '+added+' storingen ingeladen';
+    showToast('\u2705 '+added+' storingen ingeladen uit Ultimo PDF');
+  } catch(err){
+    console.error('PDF error:',err);
+    if(el) el.textContent='\u274C Fout: '+err.message;
+    showToast('\u274C PDF fout: '+err.message);
+  }
+}
+
+function stParsePDF(items){
+  // Group by Y row
+  const sorted=[...items].sort((a,b)=>a.y-b.y);
+  const rows=[];
+  let curRow=null,curY=-999;
+  sorted.forEach(item=>{
+    if(Math.abs(item.y-curY)>6){curRow={y:item.y,cells:[]};rows.push(curRow);curY=item.y;}
+    curRow.cells.push(item);
+  });
+  rows.forEach(r=>r.cells.sort((a,b)=>a.x-b.x));
+
+  // ── Step 1: find Y positions of section headers ──────────────────
+  const SECTIONS={'Actief':'actief','Gereed':'gereed','Gesloten':'gesloten'};
+  const sectionBreaks=[]; // [{y, section}]
+  rows.forEach(row=>{
+    const ultRe2=/^\d{5,6}$/;
+    const hasUlt=row.cells.some(c=>ultRe2.test(c.str));
+    if(hasUlt) return; // data row, not section header
+    const secCell=row.cells.find(c=>SECTIONS[c.str]!==undefined);
+    if(secCell) sectionBreaks.push({y:row.y,section:SECTIONS[secCell.str]});
+  });
+  sectionBreaks.push({y:99999,section:'end'});
+
+  function sectionForY(y){
+    let sec='actief';
+    for(const b of sectionBreaks){
+      if(y<b.y) return sec;
+      sec=b.section;
+    }
+    return sec;
+  }
+
+  // ── Step 2: detect column X from header row ───────────────────────
+  const headerRow=rows.find(r=>r.cells.some(c=>c.str==='Procesfunctie')&&r.cells.some(c=>c.str==='Ult-ID'));
+  let colX={proc:55,inst:160,omschr:240,datum:370,ultid:450,oorzaak:490,melder:575,jobsoort:650};
+  if(headerRow){
+    const f=name=>headerRow.cells.find(c=>c.str===name);
+    if(f('Procesfunctie'))  colX.proc=f('Procesfunctie').x;
+    if(f('Installatie'))    colX.inst=f('Installatie').x;
+    if(f('Omschrijving'))   colX.omschr=f('Omschrijving').x;
+    if(f('Melddatum'))      colX.datum=f('Melddatum').x;
+    if(f('Ult-ID'))         colX.ultid=f('Ult-ID').x;
+    if(f('Storingsoorzaak')) colX.oorzaak=f('Storingsoorzaak').x;
+    if(f('Melder'))         colX.melder=f('Melder').x;
+    if(f('Jobsoort'))       colX.jobsoort=f('Jobsoort').x;
+  }
+
+  function stGetCol(cells,minX,maxX){
+    return cells.filter(c=>c.x>=minX-15&&c.x<maxX-15).map(c=>c.str).join(' ').trim();
+  }
+  function mapJS(t){
+    const s=(t||'').toLowerCase();
+    if(s.includes('zonder productieverlies')) return 'zvp';
+    if(s.includes('met productieverlies'))    return 'mvp';
+    if(s.includes('reparatie'))               return 'rep';
+    if(s.includes('modificatie')||s.includes('preventief')||s.includes('nieuwbouw')) return 'rep';
+    return 'rep';
+  }
+  function toISO(d){
+    if(!d) return'';
+    const m=d.match(/(\d{2})-(\d{2})-(\d{4})/);
+    return m?m[3]+'-'+m[2]+'-'+m[1]:d;
+  }
+  function shiftFromTime(t){
+    if(!t) return'A';
+    const h=parseInt((t||'0').split(':')[0]);
+    return h>=7&&h<15?'A':h>=15&&h<23?'B':'C';
+  }
+
+  const SKIP=new Set(['Procesfunctie','Installatie','Omschrijving','Melddatum','Ult-ID',
+    'Storingsoorzaak','Melder','Jobsoort','Filtercriteria:','Actief','Gereed','Gesloten',
+    'Afgelopen 24 uur','verhelpen','Achteraf','melding:','gelijk','aan','1']);
+  const dateRe=/(\d{2}-\d{2}-\d{4})\s+(\d{2}:\d{2})/;
+  const ultRe=/^\d{5,6}$/;
+
+  const results=[];
+
+  rows.forEach(row=>{
+    // Skip header/section/meta rows
+    const rowTexts=row.cells.map(c=>c.str);
+    if(rowTexts.every(t=>SKIP.has(t))) return;
+    if(rowTexts.some(t=>SECTIONS[t]!==undefined)&&row.cells.length<=2) return;
+    if(rowTexts.some(t=>/Filtercriteria|Printdatum|Pagina|Afgelopen/.test(t))) return;
+
+    // Extract columns
+    const proc    =stGetCol(row.cells,colX.proc,   colX.inst);
+    const inst    =stGetCol(row.cells,colX.inst,   colX.omschr);
+    const omschr  =stGetCol(row.cells,colX.omschr, colX.datum);
+    const datumRaw=stGetCol(row.cells,colX.datum,  colX.ultid);
+    const ultid   =stGetCol(row.cells,colX.ultid,  colX.oorzaak);
+    const oorzaak =stGetCol(row.cells,colX.oorzaak,colX.melder);
+    const melder  =stGetCol(row.cells,colX.melder, colX.jobsoort);
+    const jobsoort=stGetCol(row.cells,colX.jobsoort,9999);
+
+    // Valid row: must have ultId AND date
+    if(!ultRe.test(ultid.trim())) return;
+    if(!dateRe.test(datumRaw))    return;
+    if(!proc||proc.length<2||SKIP.has(proc)) return;
+
+    const dm=datumRaw.match(dateRe);
+    const melddatum=dm?toISO(dm[1]):'';
+    const meldtijd =dm?dm[2]:'';
+
+    // ── Use Y-based section detection ───────────────────────────────
+    const section=sectionForY(row.y);
+
+    results.push({
+      id:Date.now()+results.length*7,
+      jobsoort:mapJS(jobsoort),
+      status:section,
+      procesfunctie:proc,
+      installatie:inst,
+      omschrijving:omschr,
+      melddatum,meldtijd,
+      ultId:ultid.trim(),
+      storingsoorzaak:oorzaak,
+      melder,
+      shift:shiftFromTime(meldtijd),
+      opmerkingen:'',
+      source:'ultimo-pdf'
+    });
+  });
+  return results;
+}
+
+function stCloseModal(){
+  document.getElementById('st-overlay').classList.remove('open');
+}
+
+
+// ══ SHIFTRAPPORT PDF PARSER ═══════════════════════════════════════
+
+
+
+
+
+
+
+
+
+
+
+
+// ══ PLANNING PDF PARSER ═══════════════════════════════════════════
+let plParsedTasks = [];
+
+async function plParsePDF(input){
+  const file = input.files[0];
+  if(!file) return;
+  input.value = '';
+  const el = document.getElementById('pl-pdf-status');
+  if(el) el.textContent = '\u23F3 Planning inlezen...';
+  try {
+    const buf = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({data:buf}).promise;
+    const allItems = [];
+    for(let p=1; p<=pdf.numPages; p++){
+      const page = await pdf.getPage(p);
+      const vp   = page.getViewport({scale:1});
+      const tc   = await page.getTextContent();
+      tc.items.forEach(item=>{
+        const s = item.str.trim();
+        if(s) allItems.push({
+          str: s,
+          x: Math.round(item.transform[4]),
+          y: Math.round(vp.height - item.transform[5])
+        });
+      });
+    }
+    const result = plParseItems(allItems);
+    if(!result || !result.tasks.length){
+      if(el) el.textContent = '\u26A0 Geen planning herkend';
+      showToast('\u26A0 Geen planning data gevonden in PDF');
+      return;
+    }
+    plParsedTasks = result.tasks;
+    if(el) el.textContent = '\u2713 ' + result.tasks.length + ' taken herkend';
+    plShowPreview(result);
+  } catch(err){
+    console.error('PL parse error:', err);
+    if(el) el.textContent = '\u274C Fout: ' + err.message;
+    showToast('\u274C PDF fout: ' + err.message);
+  }
+}
+
+function plParseItems(items){
+  // Sort by Y then X
+  items.sort((a,b) => a.y !== b.y ? a.y-b.y : a.x-b.x);
+
+  // Group into rows (within 6px Y)
+  const rows = [];
+  let curRow = null, curY = -999;
+  items.forEach(item=>{
+    if(Math.abs(item.y - curY) > 6){
+      curRow = {y:item.y, cells:[]};
+      rows.push(curRow);
+      curY = item.y;
+    }
+    curRow.cells.push(item);
+  });
+
+  // Column X boundaries (from coordinate analysis)
+  const COL = {
+    inst:  [0,   110],
+    avond: [110, 260],
+    nacht: [260, 410],
+    dag:   [410, 999],
+  };
+
+  function plGetCol(cells, min, max){
+    return cells.filter(c=>c.x>=min && c.x<max).map(c=>c.str).join(' ').trim();
+  }
+  function isIdle(s){
+    return !s || ['idle','o/h','x','-',''].includes(s.toLowerCase().trim());
+  }
+  function cleanShip(s){
+    return s.replace(/\d+[,.]?\d*\s*[kK].*/,'').replace(/P[\d.]+.*/,'').trim();
+  }
+  function extractTonnage(s){
+    const m = s.match(/(\d+[,.]?\d*)\s*[kK]/);
+    return m ? m[1].replace(',','.') + 'k ton' : '';
+  }
+  function extractProduct(s){
+    const m = s.match(/P[\d.]+/);
+    return m ? m[0] : '';
+  }
+  function plToISO(s){
+    // "dinsdag 21 april 2026" → "2026-04-21"
+    const MONTHS = {januari:'01',februari:'02',maart:'03',april:'04',mei:'05',
+                    juni:'06',juli:'07',augustus:'08',september:'09',
+                    oktober:'10',november:'11',december:'12'};
+    const m = s.match(/(\d{1,2})\s+(\w+)\s+(\d{4})/);
+    if(!m) return '';
+    return m[3]+'-'+(MONTHS[m[2].toLowerCase()]||'00')+'-'+m[1].padStart(2,'0');
+  }
+  function mapType(installatie){
+    const i = installatie.toUpperCase();
+    if(i.startsWith('BRUG')) return 'crane';
+    if(i.startsWith('K2')||i.startsWith('K3')||i.startsWith('K5')) return 'crane';
+    if(i.startsWith('WT')||i.startsWith('TOREN')||i.startsWith('STACKER')) return 'crane';
+    if(i.includes('NIJLPAARD')||i.includes('LOODS')||i.includes('SB AH')) return 'ship';
+    if(i.includes('ACP')||i.includes('TERMINAL')) return 'ship';
+    if(i.includes('VRACHTWAGEN')||i.includes('DIV.WZH')||i.includes('RENYAP')) return 'truck';
+    return 'other';
+  }
+  function mapStatus(txt){
+    if(!txt||isIdle(txt)) return null;
+    if(txt.toUpperCase()==='O/H') return 'maintenance';
+    return 'plan';
+  }
+
+  // Extract date from first rows
+  let datum = '';
+  rows.slice(0,3).forEach(row=>{
+    const txt = row.cells.map(c=>c.str).join(' ');
+    const d = plToISO(txt);
+    if(d) datum = d;
+  });
+
+  // Find header row
+  let headerY = 0;
+  rows.forEach(row=>{
+    if(row.cells.some(c=>c.str==='AVONDDIENST') && row.cells.some(c=>c.str==='DAGDIENST')){
+      headerY = row.y;
+    }
+  });
+
+  // Known installaties
+  const KNOWN = new Set(['BRUG 3','BRUG 4','BRUG 5','NIJLPAARD','K2/WT1','K3/WT3',
+    'WT4','K5/WT5','SB AH','TOREN 1','TOREN 2','TOREN 3','STACKER 2','STACKER 3',
+    'Diverse','Terminal Noord','CST','ACP','DIV.WZH','Loods 7','ONDERHOUD']);
+
+  const tasks = [];
+  const dienstMap = {avond:'B', nacht:'C', dag:'A'};
+  const dienstLabel = {avond:'Avonddienst (15-23)', nacht:'Nachtdienst (23-07)', dag:'Dagdienst (07-15)'};
+  let curInst = null;
+
+  rows.filter(r=>r.y > headerY + 5).forEach(row=>{
+    const instText = plGetCol(row.cells, ...COL.inst);
+
+    if(KNOWN.has(instText) || (instText && instText.length > 2 && !instText.match(/^\d/))){
+      curInst = instText;
+
+      Object.entries({avond: COL.avond, nacht: COL.nacht, dag: COL.dag}).forEach(([dienst, colRange])=>{
+        const txt = plGetCol(row.cells, ...colRange);
+        const st = mapStatus(txt);
+        if(!st && !txt) return;
+
+        const shipRaw = cleanShip(txt);
+        const tonnage = extractTonnage(txt);
+        const product = extractProduct(txt);
+        const isOH = txt.toUpperCase() === 'O/H';
+        const shift = dienstMap[dienst];
+
+        if(isOH){
+          function nextDayOH(d){
+            if(!d) return d;
+            const[y,m,dd]=d.split('-').map(Number);
+            const nd=new Date(y,m-1,dd+1);
+            return nd.getFullYear()+'-'+String(nd.getMonth()+1).padStart(2,'0')+'-'+String(nd.getDate()).padStart(2,'0');
+          }
+          const ohDate    = shift==='A' ? nextDayOH(datum) : datum;
+          const ohEndDate = shift==='C' ? nextDayOH(datum) : ohDate;
+          tasks.push({
+            id: Date.now() + tasks.length * 13,
+            type: 'maintenance',
+            name: curInst + ' — Onderhoud',
+            product: '',
+            shift,
+            status: 'plan',
+            startDate: ohDate,
+            endDate: ohEndDate,
+            startTime: shift==='A'?'07:00':shift==='B'?'15:00':'23:00',
+            endTime:   shift==='A'?'15:00':shift==='B'?'23:00':'07:00',
+            planned: '',
+            notes: 'O/H',
+            _dienst: dienst,
+            _installatie: curInst,
+          });
+        } else if(shipRaw && shipRaw.length > 1 && !isIdle(txt)){
+          // Date logic:
+          // Avond B (15-23) → same day as PDF date
+          // Nacht C (23-07) → same day start, next day end
+          // Dag   A (07-15) → next day (dag na de avond)
+          function nextDay(d){
+            if(!d) return d;
+            const[y,m,dd]=d.split('-').map(Number);
+            const nd=new Date(y,m-1,dd+1);
+            return nd.getFullYear()+'-'+String(nd.getMonth()+1).padStart(2,'0')+'-'+String(nd.getDate()).padStart(2,'0');
+          }
+          const taskDate     = shift==='A' ? nextDay(datum) : datum;
+          const taskEndDate  = shift==='C' ? nextDay(datum) : taskDate;
+
+          tasks.push({
+            id: Date.now() + tasks.length * 13,
+            type: mapType(curInst),
+            name: shipRaw,
+            product: product,
+            shift,
+            status: 'plan',
+            startDate: taskDate,
+            endDate: taskEndDate,
+            startTime: shift==='A'?'07:00':shift==='B'?'15:00':'23:00',
+            endTime:   shift==='A'?'15:00':shift==='B'?'23:00':'07:00',
+            planned: tonnage,
+            notes: curInst,
+            _dienst: dienst,
+            _installatie: curInst,
+            _raw: txt,
+          });
+        }
+      });
+    }
+  });
+
+  return { datum, tasks };
+}
+
+function plShowPreview(result){
+  const { datum, tasks } = result;
+  function nextDayPreview(d){
+    if(!d) return d;
+    const[y,m,dd]=d.split('-').map(Number);
+    const nd=new Date(y,m-1,dd+1);
+    return nd.getFullYear()+'-'+String(nd.getMonth()+1).padStart(2,'0')+'-'+String(nd.getDate()).padStart(2,'0');
+  }
+  const datumNext = nextDayPreview(datum);
+  document.getElementById('pl-parse-meta').innerHTML =
+    'Planning: <strong>' + (datum||'?') + '</strong>' +
+    ' &nbsp;&#x2192;&nbsp; Avond B: <strong>' + (datum||'?') + '</strong>' +
+    ' &nbsp;|&nbsp; Nacht C: <strong>' + (datum||'?') + '&#x2192;' + (datumNext||'?') + '</strong>' +
+    ' &nbsp;|&nbsp; Dag A: <strong>' + (datumNext||'?') + '</strong>';
+  document.getElementById('pl-parse-count').textContent = tasks.length + ' taken';
+
+  const ICONS = {ship:'🚢',crane:'🏗️',truck:'🚛',maintenance:'🔧',other:'📋'};
+  const shiftColors = {A:'#3498db', B:'#c49a00', C:'#1a9e50'};
+  const shiftLabel  = {A:'Dag A',  B:'Avond B', C:'Nacht C'};
+
+  // Group by dienst
+  const byDienst = {A:[], B:[], C:[]};
+  tasks.forEach(t => (byDienst[t.shift]||[]).push(t));
+
+  let body = '';
+  ['B','C','A'].forEach(shift=>{
+    const list = byDienst[shift];
+    if(!list.length) return;
+    const shiftDate = {A: datumNext, B: datum, C: datum};
+    const shiftDateEnd = {A: datumNext, B: datum, C: datumNext};
+    body += `<div style="margin-bottom:14px;">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;
+                  color:${shiftColors[shift]};margin-bottom:8px;padding-bottom:4px;
+                  border-bottom:2px solid ${shiftColors[shift]}44;display:flex;justify-content:space-between;">
+        <span>Dienst ${shift} — ${shiftLabel[shift]}</span>
+        <span style="font-weight:400;opacity:.8;">${shiftDate[shift]}${shift==='C'?' → '+shiftDateEnd[shift]:''}</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;">`;
+
+    list.forEach(t=>{
+      body += `<div style="display:flex;align-items:center;gap:10px;padding:7px 10px;
+                           background:var(--surface2);border-radius:8px;font-size:12px;">
+        <span style="font-size:16px;">${ICONS[t.type]||'📋'}</span>
+        <div style="flex:1;">
+          <div style="font-weight:600;">${escHtml(t.name)}</div>
+          <div style="font-size:10px;color:var(--muted2);">
+            ${escHtml(t.notes||'')}
+            ${t.product?'&nbsp;·&nbsp; Product: <strong>'+escHtml(t.product)+'</strong>':''}
+            ${t.planned?'&nbsp;·&nbsp; Gepland: <strong>'+escHtml(t.planned)+'</strong>':''}
+          </div>
+        </div>
+        <span style="font-size:10px;color:${shiftColors[shift]};font-weight:600;">
+          ${t.startTime}–${t.endTime}
+        </span>
+      </div>`;
+    });
+    body += '</div></div>';
+  });
+
+  body += `<div style="background:rgba(230,126,34,.07);border:1px solid rgba(230,126,34,.2);
+                       border-radius:8px;padding:10px 14px;font-size:11px;color:#e67e22;margin-top:6px;">
+    <strong>&#x1F916; AI Builder (Faza 4):</strong> Opmerkingen en vrije tekst notities per installatie
+    worden in Faza 4 automatisch gekoppeld aan Safety/Quality meldingen.
+  </div>`;
+
+  document.getElementById('pl-parse-body').innerHTML = body;
+  document.getElementById('pl-parse-overlay').classList.add('open');
+}
+
+function plApplyParsed(){
+  if(!plParsedTasks.length) return;
+  const existing = plLoadTasks();
+  const existingKeys = new Set(existing.map(t=>t.name+'|'+t.shift+'|'+t.startDate));
+  let added = 0;
+  plParsedTasks.forEach(t=>{
+    const key = t.name+'|'+t.shift+'|'+t.startDate;
+    if(!existingKeys.has(key)){
+      existing.push(t);
+      existingKeys.add(key);
+      added++;
+    }
+  });
+  plSaveTasks(existing);
+  plClosePreview();
+  plRender();
+  showToast('\u2705 ' + added + ' taken toegevoegd aan Planning');
+}
+
+function plClosePreview(){
+  document.getElementById('pl-parse-overlay').classList.remove('open');
+  plParsedTasks = [];
 }
 
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
